@@ -1,4 +1,4 @@
-name: Publish HTML patch
+name: Publish skill preview
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: html-patch-release
+  group: skill-preview-release
   cancel-in-progress: false
 
 jobs:
@@ -32,15 +32,15 @@ jobs:
         run: |
           python -X utf8 tests/check_release_files.py --git
           python -X utf8 scripts/run_checks.py
-      - name: Package and publish patch
+      - name: Package and publish preview
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_COMMIT: ${{ github.sha }}
         shell: python
         run: |
           import hashlib, json, os, pathlib, subprocess, urllib.request, zipfile
-          tag = 'v1.14.1-preview.1'
-          base = 'v1.14.0-preview.1'
+          tag = 'v1.15.0-preview.1'
+          base = 'v1.14.1-preview.1'
           root = pathlib.Path('.')
           out = root / 'dist'
           out.mkdir(exist_ok=True)
@@ -61,13 +61,14 @@ jobs:
           patch.write_bytes(subprocess.check_output(['git', 'diff', '--binary', base, os.environ['RELEASE_COMMIT'], '--']))
           sums = out / 'SHA256SUMS.txt'
           sums.write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest() + '  ' + p.name + '\n' for p in [archive, patch]), encoding='utf-8')
-          body = '''HTML修正patch；發布套件1.14.1-preview.1，HTML呈現器1.0.1。研究技能及規則相容版本維持1.14.0。
+          body = '''技能1.15.0；發布套件1.15.0-preview.1；HTML呈現器1.1.0。研究規則維持1.14.0，schema與驗證器不變。
 
-          - 修正iPhone Safari章節操作、手機直式卡片表格、欄名、證據排列與桌面／平板寬度。
-          - 原生章節連結及無JavaScript閱讀；增強控制項於初始化完成後顯示。
-          - iPhone實機版面與章節操作已由使用者驗收。完整鍵盤、圖表互動與列印等其餘瀏覽器驗收仍待完成，保留Pre-release。
-          - 發布前完整回歸與LF checkout檢查通過；跨平台CI及詳細變更請見本提交Actions與CHANGELOG。
-          - ZIP為完整安裝包，解壓後保留analyze-stocks/及相對路徑；patch相對v1.14.0-preview.1，SHA256SUMS.txt涵蓋兩者。
+          - 新增唯讀多空論點對照與實際查核階段，依既有review明確連結顯示支持、反方及缺口。
+          - 由目前執行技能的模型依序審查，不另串接模型API；不改研究分數或來源原檔。
+          - 保留1.14.0原檔、位元組雜湊及完整推導回歸；舊報告可原樣驗證。
+          - 新增表格尚未完成iPhone實機、完整鍵盤與列印視覺驗收，保留Pre-release。
+          - 發布前完整回歸與LF checkout檢查通過；跨平台CI及詳細變更請見Actions與CHANGELOG。
+          - ZIP為完整安裝包；patch相對v1.14.1-preview.1，SHA256SUMS.txt涵蓋兩者。
           - 安裝包只含公開來源與合成案例，不含個人研究報告或截圖。
           '''
           headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
@@ -76,7 +77,7 @@ jobs:
               req = urllib.request.Request(url, data=payload, headers=dict(headers, **{'Content-Type': content_type}), method='POST')
               with urllib.request.urlopen(req) as res:
                   return json.load(res)
-          release = request(api + '/releases', json.dumps({'tag_name': tag, 'target_commitish': os.environ['RELEASE_COMMIT'], 'name': tag + ' — HTML行動版修正', 'body': body, 'draft': True, 'prerelease': True}).encode())
+          release = request(api + '/releases', json.dumps({'tag_name': tag, 'target_commitish': os.environ['RELEASE_COMMIT'], 'name': tag + ' — 多空論點與查核階段', 'body': body, 'draft': True, 'prerelease': True}).encode())
           upload = release['upload_url'].split('{')[0]
           for p in [archive, patch, sums]:
               result = request(upload + '?name=' + p.name, p.read_bytes(), 'application/zip' if p == archive else 'application/octet-stream')

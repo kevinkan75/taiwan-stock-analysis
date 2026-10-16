@@ -79,6 +79,8 @@ risk_conditions；不得把資料不足寫成價格不划算。保留原行動�
 
 1. 完成研究JSON推導、報告及原驗證器預設驗證；決策模式再完成decision_guard。
 2. 依financial-history.md填financial_history；年度嘗試併記financials／growth任務。以review_guard --render取得financial_history_report與作業狀態區塊；這仍是草稿，不宣稱全案通過。
+   完成evidence-audit的論點連結後，同一輸出的thesis_comparison_report提供多空對照草稿；檢查支持與反方沒有混用，納入定稿或依快速版精簡，仍保留實際影響及重評條件。
+   若已修改研究report_markdown或論點，先重新推導並預設驗證研究，再執行review --render；render不會修復失效的研究雜湊。決策模式另按原流程更新決策參照。
 3. 將兩個區塊加入實際交付全文，重新綁定、驗證研究／決策。若研究全文也含決策，先定研究檔，再更新決策參照雜湊。
 4. review_guard --derive更新實際來源檔案雜湊及assessment，另存.review.json；再跑不帶derive的預設驗證。
 5. 完整新報告必須研究／ETF、適用決策、review三層均通過才稱已完成對應程式核對。
@@ -94,6 +96,8 @@ python3 <技能目錄>/scripts/review_guard.py final.review.json --research rese
 研究模式省略--decision。紀錄參照保存原檔版本及SHA-256，舊版缺值保持未知，不回填。
 檔名沿用原研究基底加.review.json；保存方式沿用既有規則。
 附檔的通過不會改變研究分數或放寬既有資料門檻。
+
+HTML查核階段沿用tasks及assessment，不另推導成功率。obtained表示已取得並核對；complete僅表示完成最低作業流程，仍可能包含access_failed、conflicting或incompatible。尚未執行與部分完成分開；失敗不退回合成報告、不補中性分數。紀錄只描述截止／匯出時的狀態，不宣稱即時進度、持續監控或工具呼叫已由程式證明。
 
 ## 信心、追問與正文檢查
 

@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import sys
+import re
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,8 +36,26 @@ def main():
                 continue
             if path.suffix in ('.py', '.json', '.js', '.css', '.html', '.md', '.svg'):
                 check(b'\r\n' not in path.read_bytes(), 'source or fixture unexpectedly converted: ' + str(path.relative_to(ROOT)))
+    sys.path.insert(0, str(ROOT / 'scripts'))
+    import rules_core
+    import html_export
+    metadata = (ROOT / 'SKILL.md').read_text(encoding='utf-8').split('---')[1]
+    skill = re.search(r'^  version: "([^"]+)"', metadata, re.M).group(1)
+    rule = re.search(r'^  rule-version: "([^"]+)"', metadata, re.M).group(1)
+    renderer = re.search(r'^  html-renderer-version: "([^"]+)"', metadata, re.M).group(1)
+    check(skill == rules_core.SKILL_VERSION, 'skill metadata and current profile agree')
+    check(rule == rules_core.RULE_VERSION, 'rule metadata and numeric profile agree')
+    check(renderer == html_export.RENDERER_VERSION, 'renderer metadata agrees with exporter')
+    workflow = (ROOT / '.github/workflows/patch-release.yml').read_text(encoding='utf-8')
+    tag = re.search(r"tag = '([^']+)'", workflow).group(1)
+    check(tag == 'v' + skill + '-preview.1', 'release tag matches skill version')
+    check('| 發布套件 | ' + tag[1:] + ' |' in readme, 'README package version matches release')
+    check('| 研究技能相容版本 | ' + skill + ' |' in readme, 'README skill version matches metadata')
+    for name in ['snapshot', 'etf', 'decision', 'review']:
+        example = json.loads((ROOT / ('assets/' + name + '.example.json')).read_bytes())
+        check((example['skill_version'], example['rule_version']) == (skill, rule), 'current example profile: ' + name)
     # Existing archive checks are independent, fixed hashes recorded before this release prep.
-    for version in ['1.12.0', '1.13.0']:
+    for version in ['1.12.0', '1.13.0', '1.14.0']:
         baseline=json.loads((ROOT / ('tests/release-' + version + '.baseline.json')).read_bytes())
         for rel, expected in baseline['files'].items():
             check(hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == expected, 'historical bytes retained: ' + rel)

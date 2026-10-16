@@ -91,7 +91,7 @@ def main():
     try:export.render(bad,r,raw,rr,AT)
     except ValueError:check(True,'invalid source rejected without repair')
     else:check(False,'invalid source exported')
-    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.0.1','9.9.9')]:
+    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.1.0','9.9.9')]:
         try:export.verify(output.replace(old,new,1),*args)
         except ValueError:check(True,'reject tampered '+old)
         else:check(False,'tampered export accepted '+old)
@@ -138,6 +138,18 @@ def main():
         check(export.digest(export.encode(out).encode())==baseline['derived'][name],'frozen derived '+name)
     d=json.loads((ROOT/'tests/decision.rule-1.13.0.json').read_bytes());dr=(ROOT/'tests/research.decision.example.json').read_bytes()
     check(decision.validate(d,json.loads(dr),export.digest(dr))['valid'],'archived decision remains fully valid')
+    baseline=json.loads((ROOT/'tests/release-1.14.0.baseline.json').read_bytes())
+    for name,sha in baseline['files'].items():check(export.digest((ROOT/name).read_bytes())==sha,'frozen bytes '+name)
+    for name,g in [('snapshot',stock),('etf',etf)]:
+        obj=json.loads((ROOT/('tests/'+name+'.rule-1.14.0.json')).read_bytes());result=g.validate(obj)
+        check(result['valid'],'archived release remains valid '+name)
+        out=stock.derived_snapshot(obj,result) if name=='snapshot' else result['derived']
+        check(export.digest(export.encode(out).encode())==baseline['derived'][name],'frozen derived '+name)
+    d=json.loads((ROOT/'tests/decision.rule-1.14.0.json').read_bytes());dr=(ROOT/'tests/research.decision.example.json').read_bytes()
+    check(decision.validate(d,json.loads(dr),export.digest(dr))['valid'],'archived decision remains fully valid')
+    raw14=(ROOT/'tests/snapshot.rule-1.14.0.json').read_bytes()
+    review14=json.loads((ROOT/'tests/review.rule-1.14.0.json').read_bytes())
+    check(review.validate(review14,json.loads(raw14),raw14)['valid'],'archived 1.14 review remains valid without migration')
     oldraw=(ROOT/'tests/snapshot.rule-1.13.0.json').read_bytes();oldrr=(ROOT/'tests/review.rule-1.13.0.json').read_bytes()
     olds=json.loads(oldraw);oldr=json.loads(oldrr)
     legacy=deepcopy(oldr);legacy.update(schema_version='1.1',model_version='review-1.1',skill_version='1.12.0',rule_version='1.12.0',validator_version='1.1.0');legacy.pop('financial_history');legacy['assessment'].pop('financial_history')

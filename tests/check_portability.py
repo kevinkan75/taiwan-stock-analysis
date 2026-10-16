@@ -156,7 +156,7 @@ def main():
         tree = ast.parse(path.read_text(encoding='utf-8'))
         imports = {n.name.split('.')[0] for x in ast.walk(tree) if isinstance(x, ast.Import) for n in x.names}
         imports |= {x.module.split('.')[0] for x in ast.walk(tree) if isinstance(x, ast.ImportFrom)}
-        check(imports <= stdlib | {'finance_math', 'snapshot_guard', 'rules_core', 'decision_guard', 'etf_guard', 'numeric_rules', 'decision_numeric', 'report_checks', 'review_guard', 'evidence_audit', 'audit_fixtures', 'financial_history', 'financial_history_fixtures', 'html_export', 'check_evidence_audit', 'itertools'}, path.name + ': portable dependencies')
+        check(imports <= stdlib | {'finance_math', 'snapshot_guard', 'rules_core', 'decision_guard', 'etf_guard', 'numeric_rules', 'decision_numeric', 'report_checks', 'review_guard', 'evidence_audit', 'audit_fixtures', 'financial_history', 'financial_history_fixtures', 'html_export', 'research_views', 'check_evidence_audit', 'itertools'}, path.name + ': portable dependencies')
     data = cases()
     for case in data['cases']:
         snapshot = merge(data['template'], case['overrides'])

@@ -15,10 +15,11 @@ from urllib.parse import urlsplit
 
 import snapshot_guard as stock
 import review_guard as review
+import research_views as views
 from rules_core import SUMMARY_LABELS, timestamp
 
 ROOT = Path(__file__).resolve().parents[1]
-RENDERER_VERSION = '1.0.1'
+RENDERER_VERSION = '1.1.0'
 ASSETS = ROOT / 'assets/html-report'
 LABELS = {'fundamentals':'基本面','growth':'成長','valuation':'估值','industry':'產業','risk':'風險',
  'technical':'技術面','green':'🟢 綠燈','yellow':'🟡 黃燈','red':'🔴 紅燈','unknown':'⚪ 未評定',
@@ -92,6 +93,49 @@ def table(headers,rows,caption):
 def details(title,body):return '<details><summary>'+esc(title)+'</summary>'+body+'</details>'
 
 
+def claim_evidence(claims):
+    if not claims:
+        return '<p class="muted">未建立明確主張連結</p>'
+    parts=[]
+    for claim in claims:
+        selected=claim['selected_source']
+        source=claim['sources'][selected] if selected is not None else None
+        body='<p>'+esc(claim['id']+'：'+claim['statement'])+'</p><p>'+esc(views.VERDICTS[claim['verdict']])+'</p>'
+        body+='<p>'+esc(claim['reason'])+'</p>'
+        if source:
+            body+=safe_link(source['url'])+'<p>'+esc(source['locator']+'；'+source['period']+'；'+source['basis'])+'</p>'
+        elif claim['premises']:
+            body+='<p>前提主張：'+esc('、'.join(claim['premises']))+'</p>'
+        else:
+            body+='<p class="muted">未指定採用來源；不可視為外部事實已查證。</p>'
+        parts.append(details(claim['id']+' · '+views.VERDICTS[claim['verdict']],body))
+    return ''.join(parts)
+
+
+def thesis_comparison(s,r):
+    rows=[]
+    for row in views.thesis_rows(s,r):
+        counter=''.join('<p>'+esc(x['scenario'])+'</p>'+details('反方依據',claim_evidence(x['evidence'])) for x in row['counter_cases']) or '<p class="muted">未記錄對應反方</p>'
+        outcome=''.join('<p><b>'+esc(views.DISPOSITIONS[x['disposition']])+'</b></p><p>'+esc(x['impact'])+'</p><p>後續核對：'+esc(x['follow_up'])+'</p>' for x in row['counter_cases']) or '<p class="muted">未記錄處理結果</p>'
+        conditions=''.join(value_html({k:x[k] for k in ('observable','trigger','review_on')}) for x in row['conditions']) or '<p class="muted">未記錄對應失效條件</p>'
+        rows.append([esc(row['thesis']),claim_evidence(row['support']),counter,outcome,conditions])
+    intro='<h2>多空論點對照</h2><p>沿用原研究與查核紀錄；未建立連結不等於沒有證據。已揭露不代表已調整評分，未解決項目保留原有限制。</p>'
+    return intro+(table(['原始論點','支持依據','反方質疑','處理結果','重新評估條件'],rows,'多空論點、證據與處理結果') if rows else '<p class="empty">尚未形成投資論點，未產生多空對照。</p>')
+
+
+def workflow_view(s,r):
+    a=r['assessment'];audit=r['evidence_audit'];annual=a['financial_history']
+    tasks=views.task_rows(r)
+    rows=[[esc(x['label']),esc(x['status']),esc(x['reason']),details('查看實際嘗試紀錄',value_html(x['attempts'])) if x['attempts'] else '<span class="muted">尚無嘗試紀錄</span>'] for x in tasks]
+    audit_reason=audit['coverage_note']+'；關鍵未解決項目：'+('、'.join(a['claim_audit']['material_unresolved']) or '無（依原紀錄）')
+    rows.extend([
+        [esc('年度財報核對'),esc(LABELS.get(annual['status'],annual['status'])),esc(annual['reason']),'請使用上方「三年財務」章節查看年度資料；勾稽見本章'],
+        [esc('主張與反方審查'),esc({'not_run':'尚未執行','partial':'尚未完成','complete':'已完成'}[audit['status']]),esc(audit_reason),'逐項主張與反方紀錄見本章'],
+        [esc('結構與計算驗證'),'通過',esc('本次匯出已執行來源預設驗證；不證明原文真實、工具呼叫或投資勝率。'),'研究與 review 參照及雜湊已核對'],
+    ])
+    return '<h2>查核階段與結果</h2><p>以下為報告產生時的作業紀錄，不是即時進度或持續監控。最低查核完成仍可能存取失敗、來源衝突或證據不足；不以模擬資料補位。</p>'+table(['查核項目','實際狀態','缺口、影響與下一步','紀錄與查閱'],rows,'查核階段、實際結果與限制')
+
+
 def chart(rows,key,label,unit,scale):
     values=[r.get(key) for r in rows]; valid=[v/scale for v in values if v is not None]
     if not valid:return '<p class="empty">'+esc(label)+'：尚無可用年度值；不以 0 補齊。</p>'
@@ -163,7 +207,7 @@ def render(s,r,raw,review_raw,exported_at=None):
     for key,d in list(s['scores'].items())+[('technical',s['technical'])]:
         istech=key=='technical'
         overview+='<article class="card"><h3>'+esc(LABELS[key])+'</h3><p>'+esc(LABELS.get(d.get('signal'),d.get('signal','未評定')))+'</p><p>'+('狀態：'+esc(LABELS.get(d['status'],d['status'])) if istech else '分數：'+esc(d['display_score'] if d['display_score'] is not None else '未評定')+' · 覆蓋：'+esc(str(d['coverage'])+'/'+str(d['total_items'])))+'</p>'+details('展開證據',value_html(d))+'</article>'
-    overview+='</div><h2>投資論點與支持依據</h2>'+value_html(s['thesis'])+'<h2>限制與缺口</h2>'+value_html(s['data_gaps'])
+    overview+='</div>'+thesis_comparison(s,r)+'<h2>限制與缺口</h2>'+value_html(s['data_gaps'])
     annual='<p>年度財務：'+esc(LABELS.get(f['status'],f['status']))+'；'+esc(f['reason'])+'</p><p>金額以百萬 '+esc(f.get('currency') or '未取得')+' 顯示；EPS 為財報幣別／普通股，ADR 不自動換算。百分比不是小數比例。顯示四捨五入至小數兩位；缺值不補 0、不跨缺值連線。</p>'
     annual+='<div class="controls"><label for="indicator">圖表指標</label><select id="indicator">'+''.join('<option value="'+key+'">'+esc(label)+'</option>' for key,label,_,_ in SERIES)+'</select><button type="button" id="view-toggle" aria-pressed="false">顯示資料表</button></div><div id="charts">'
     for key,label,unit,scale in SERIES:
@@ -176,7 +220,7 @@ def render(s,r,raw,review_raw,exported_at=None):
     val+='<h2>歷史區間</h2>'+(value_html(s['valuation']['band']) if s['valuation']['band'] else '<p class="empty">未取得可比歷史區間；不推造上下緣。</p>')
     val+='<h2>有依據的估值情境</h2>'+(value_html(s['valuation']['scenarios']) if s['valuation']['scenarios'] else '<p class="empty">假設不足，未建立模型價格。</p>')
     val+=details('方法、假設來源與估值限制',value_html({k:v for k,v in s['valuation'].items() if k not in ('band','scenarios')}))
-    risk='<h2>事件與風險</h2>'+value_html(s['events'])+value_html(s['risks'])+'<h2>反方情境與論點失效條件</h2>'+value_html(r['evidence_audit']['counter_cases'])+value_html(r['evidence_audit']['invalidation_conditions'])+'<h2>缺口與等待原因</h2>'+value_html(s['data_gaps'])+value_html(a['waiting_reasons'])
+    risk=workflow_view(s,r)+'<h2>事件與風險</h2>'+value_html(s['events'])+value_html(s['risks'])+'<h2>反方情境與論點失效條件</h2>'+value_html(r['evidence_audit']['counter_cases'])+value_html(r['evidence_audit']['invalidation_conditions'])+'<h2>缺口與等待原因</h2>'+value_html(s['data_gaps'])+value_html(a['waiting_reasons'])
     risk+='<h2>報表勾稽</h2>'+table(['期末','核對項目','狀態','差額（原幣）','容許差額（原幣）'],[[esc(c['period_end']),esc(LABELS.get(c['check'],c['check'])),esc(LABELS[c['status']]),esc(number(c['difference'])),esc(number(c['tolerance']))] for c in f['checks']],'報表差額與容許誤差（'+str(f.get('currency'))+'）')
     risk+='<h2>來源清單</h2>'+value_html(s['sources'])+value_html(r['sources'])+details('逐項主張查核',value_html(r['evidence_audit']['claims']))+details('取數作業紀錄',value_html(r['tasks']))
     original=details('完整原始報告（純文字）','<pre id="original-report">'+esc(s['report_markdown'])+'</pre>')

@@ -3,7 +3,7 @@ name: "analyze-stocks"
 description: 建立可追溯的股票與ETF投資分析儀表板。個股涵蓋基本面、成長、估值、產業、技術面、最新事件與風險；ETF涵蓋指數規則、成本與追蹤、流動性與折溢價、持股集中度、底層估值、配息品質與結構風險，並附同類ETF比較。依證據評分及顯示燈號，提供快速版、詳細版與歷次比較，並可加上投資前決策檢核（八關紅黃綠燈、進場／分批／等待／放棄結論及退場條件）。當使用者要求「分析台積電」「分析2330」「分析NVDA」「分析0050」「分析00878」「分析VOO」、個股估值、ETF評估、股票或ETF投資儀表板、更新分析，或比較數檔股票或ETF（如「0050和006208哪個好」）時使用；當使用者要求「分析大盤」「台股行情」「市場環境」時，以市場模式輸出台股市場快照；當使用者問「X可以買嗎」「我想買X」「要不要加碼」「買點」「進場前幫我判斷」「該不該買」時（X為股票或ETF），也務必使用並進入決策模式。主要支援台灣與美國上市股票及ETF；其他市場先確認資料可用性。使用者要求「匯出互動報告」或HTML時，依單一個股研究匯出流程產生離線互動HTML。純查股價、選擇權、加密資產、下單、賣出決策及投資組合配置不自動套用此技能；槓桿、反向、期貨型ETF只提供結構說明，不給投資訊號。
 license: MIT. See LICENSE for full terms.
 metadata:
-  version: "1.14.0"
+  version: "1.15.0"
   updated: "2026-10-16"
   author: "Kevin"
   schema-version: "1.5"
@@ -20,7 +20,7 @@ metadata:
   review-model-version: "review-1.2"
   review-schema-version: "1.2"
   review-validator-version: "1.2.0"
-  html-renderer-version: "1.0.1"
+  html-renderer-version: "1.1.0"
   bar-validator-version: "1.0.0"
   language: "zh-TW"
 ---
@@ -43,6 +43,8 @@ metadata:
 ## 作業狀態與信心（1.13.0）
 
 完整個股／ETF報告另依[作業紀錄與取數流程](references/research-process.md)建立共用.review.json；啟動時載入一次即可。固定區分作業是否完成最低查核、決策證據是否足夠及等待原因，等待不等於價格不利。另讀[逐項主張與反證](references/evidence-audit.md)，另依[三年財務趨勢與報表勾稽](references/financial-history.md)填最近三個完整年度，在同一review填來源定位、可重算主張、反方及實際論點的失效條件；定稿執行review_guard預設驗證，與既有研究／ETF及決策驗證併用。追問信心時解釋原等級及證據，不新增無校準的百分比或主觀分數；程式核對不代表來源真實或投資勝率。
+
+多空論點對照沿用同一review：依evidence-audit.md將論點明確連到支持主張、反方、處理結果及重評條件；由目前執行技能的模型依序審查，不另串接模型API。HTML呈現器1.1.0依實際紀錄顯示對照及查核階段，既有原檔未建立的連結維持缺口，不推造補齊。
 
 ## 工作立場
 
