@@ -11,31 +11,37 @@ class Element {
   setAttribute(key, value) { this.attrs[key] = value; }
   addEventListener(name, listener) { this.listeners[name] = listener; }
   focus() { focused = this.id; }
-  fire(name, event = {}) { this.listeners[name](event); }
+  fire(name, event = {preventDefault:()=>{}}) { this.listeners[name](event); }
 }
 let focused = null;
 const tabs = ['overview','financials','valuation','risks'].map(x => new Element('tab-'+x));
 const panels = ['overview','financials','valuation','risks'].map(x => new Element(x));
 const keys = ['revenue','gross_margin','operating_margin','net_income_parent','diluted_eps','roe','fcf','revenue_yoy','eps_yoy'];
 const figures = keys.map(x => { const e = new Element(x); e.dataset.series = x; return e; });
-const elements = Object.fromEntries(['indicator','view-toggle','charts','annual-table','print'].map(x => [x, new Element(x)]));
+const elements = Object.fromEntries(['indicator','view-toggle','charts','annual-table','print','interaction-help'].map(x => [x, new Element(x)]));
 elements.indicator.value = 'revenue';
 const details = [new Element('closed-detail'), new Element('open-detail')];
 details[1].open = true;
 const events = {};
 let printed = 0;
+let ready = false;
 const window = {addEventListener:(name,fn)=>{events[name]=fn;},print:()=>{printed++;}};
 const document = {
+  documentElement: {classList:{add:name=>{ready=name==='js-ready';}}},
   querySelectorAll: selector => ({'[role="tab"]':tabs,'[role="tabpanel"]':panels,'[data-series]':figures,'details:not([open])':details.filter(x=>!x.open)})[selector],
   getElementById: id => elements[id]
 };
 const script = fs.readFileSync(path.join(__dirname,'../assets/html-report/report.js'),'utf8');
 vm.runInNewContext(script,{window,document});
+check(ready,'progressive controls enabled only after successful initialization');
+check(elements['interaction-help'].textContent.includes('列印／分享說明'),'enhanced navigation help updated');
 check(panels.filter(x=>!x.hidden).map(x=>x.id).join()==='overview','initial overview only');
 check(tabs[0].attrs['aria-selected']==='true' && tabs[1].tabIndex===-1,'initial ARIA and roving focus');
 check(figures.filter(x=>!x.hidden).map(x=>x.id).join()==='revenue','initial revenue chart only');
 check(elements['annual-table'].hidden && !elements.charts.hidden,'initial chart view');
-tabs[1].fire('click');
+let clickPrevented=false;
+tabs[1].fire('click',{preventDefault:()=>{clickPrevented=true;}});
+check(clickPrevented,'enhanced chapter links prevent native navigation only after JS starts');
 check(!panels[1].hidden && panels[0].hidden,'click financial tab');
 let prevented = false;
 tabs[1].fire('keydown',{key:'End',preventDefault:()=>{prevented=true;}});

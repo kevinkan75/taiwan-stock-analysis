@@ -62,6 +62,17 @@ def main():
     check(p.tags.count('section')==4,'exact four panels')
     check(sum(a.get('role')=='tab' for a in p.attrs)==4,'four accessible tabs')
     check(sum(a.get('role')=='tabpanel' for a in p.attrs)==4,'four linked panels')
+    native_tabs=[a for tag,a in zip(p.tags,p.attrs) if a.get('role')=='tab']
+    check([a.get('href') for a in native_tabs]==['#overview','#financials','#valuation','#risks'],'native chapter targets work without JavaScript')
+    check(all(tag=='a' for tag,a in zip(p.tags,p.attrs) if a.get('role')=='tab'),'chapter controls are native links')
+    check(all('hidden' not in a and 'tabindex' not in a for a in p.attrs if a.get('role')=='tabpanel'),'all four chapters readable and not focus-boxed without JavaScript')
+    check('href="#print-help"' in output and 'id="print-help"' in output and 'iPhone／iPad' in output,'native print help available without script')
+    cells=[a for tag,a in zip(p.tags,p.attrs) if tag=='td']
+    check(cells and all(a.get('data-label') for a in cells),'all table cells retain mobile field labels')
+    check('data-label="指標"' in output and 'data-label="期間與口徑"' in output,'valuation card labels use independent expected column names')
+    hostile_header=export.table(['<img src=x onerror=alert(1)>'],[['safe']], 'safe')
+    check('data-label="&lt;img' in hostile_header and '<img' not in hostile_header,'mobile header attributes remain escaped')
+
     check(sum('data-series' in a for a in p.attrs)==9,'nine annual indicators')
     check(p.tags.count('svg')==9,'all charts embedded SVG')
     check(p.tags.count('script')==2,'only fixed script and non-executable manifest')
@@ -80,7 +91,7 @@ def main():
     try:export.render(bad,r,raw,rr,AT)
     except ValueError:check(True,'invalid source rejected without repair')
     else:check(False,'invalid source exported')
-    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.0.0','9.9.9')]:
+    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.0.1','9.9.9')]:
         try:export.verify(output.replace(old,new,1),*args)
         except ValueError:check(True,'reject tampered '+old)
         else:check(False,'tampered export accepted '+old)
@@ -157,6 +168,9 @@ def main():
     css=(ROOT/'assets/html-report/report.css').read_text()
     check('@media print' in css and '#annual-table[hidden]' in css and 'section[hidden]' in css and 'figure[hidden]' in css,'print CSS explicitly reveals all panels/charts/table')
     check('@media(max-width:640px)' in css and 'grid-template-columns:1fr' in css and 'overflow-x:auto' in css,'mobile CSS and table scrolling specified')
+    check('max-width:1440px' in css and 'max-width:1180px' in css and 'evidence-cards' in css,'desktop width and tablet evidence layout specified')
+    check('@media screen and (max-width:760px)' in css and 'content:attr(data-label)' in css and '.table-scroll td{display:block' in css,'mobile tables stack independently of JavaScript')
+    check('.js-only{display:none}' in css and '.js-ready .controls{display:flex}' in css,'nonfunctional enhanced-only controls hidden until script succeeds')
     check('focus-visible' in css and 'content-visibility:visible' in css,'focus and expanded print details specified')
     print(json.dumps({'passed':True,'checks':count,'scope':'synthetic export, CLI, security and frozen-source integrity; browser visual acceptance not tested'},ensure_ascii=False))
 

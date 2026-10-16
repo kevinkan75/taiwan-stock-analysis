@@ -5,15 +5,15 @@
 <a class="skip" href="#content">跳至研究內容</a>
 <header>@@HEADER@@</header><main id="content">@@STATUSES@@@@WARNINGS@@
 <nav aria-label="研究章節"><div role="tablist" aria-label="研究章節">
-<button id="tab-overview" role="tab" aria-controls="overview" aria-selected="true">概覽</button>
-<button id="tab-financials" role="tab" aria-controls="financials" aria-selected="false">三年財務</button>
-<button id="tab-valuation" role="tab" aria-controls="valuation" aria-selected="false">估值</button>
-<button id="tab-risks" role="tab" aria-controls="risks" aria-selected="false">風險與來源</button>
-</div><button id="print" type="button">列印完整報告</button></nav>
-<noscript><p>JavaScript 未啟用；以下仍完整呈現四章、所有圖表與數值。</p></noscript>
-<section id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0"><h2 class="section-title">概覽</h2>@@OVERVIEW@@</section>
-<section id="financials" role="tabpanel" aria-labelledby="tab-financials" tabindex="0"><h2 class="section-title">三年財務</h2>@@FINANCIALS@@</section>
-<section id="valuation" role="tabpanel" aria-labelledby="tab-valuation" tabindex="0"><h2 class="section-title">估值</h2>@@VALUATION@@</section>
-<section id="risks" role="tabpanel" aria-labelledby="tab-risks" tabindex="0"><h2 class="section-title">風險與來源</h2>@@RISKS@@</section>
-<footer>@@FOOTER@@</footer></main>
+<a id="tab-overview" class="chapter-link" href="#overview" role="tab" aria-controls="overview" aria-selected="true">概覽</a>
+<a id="tab-financials" class="chapter-link" href="#financials" role="tab" aria-controls="financials" aria-selected="false">三年財務</a>
+<a id="tab-valuation" class="chapter-link" href="#valuation" role="tab" aria-controls="valuation" aria-selected="false">估值</a>
+<a id="tab-risks" class="chapter-link" href="#risks" role="tab" aria-controls="risks" aria-selected="false">風險與來源</a>
+</div><a class="print-help-link" href="#print-help">列印／分享說明</a></nav>
+<p id="interaction-help" class="muted">上方章節名稱可點選跳轉。若目前以檔案預覽開啟而未啟用互動，四章內容仍完整保留，可直接往下閱讀。</p>
+<section id="overview" role="tabpanel" aria-labelledby="tab-overview"><h2 class="section-title">概覽</h2>@@OVERVIEW@@</section>
+<section id="financials" role="tabpanel" aria-labelledby="tab-financials"><h2 class="section-title">三年財務</h2>@@FINANCIALS@@</section>
+<section id="valuation" role="tabpanel" aria-labelledby="tab-valuation"><h2 class="section-title">估值</h2>@@VALUATION@@</section>
+<section id="risks" role="tabpanel" aria-labelledby="tab-risks"><h2 class="section-title">風險與來源</h2>@@RISKS@@</section>
+<aside id="print-help" class="print-help" tabindex="-1"><h2>列印與分享</h2><p>iPhone／iPad：請使用開啟檔案的應用程式之「分享」選單，選擇「列印」；Safari可從分享選單列印或另存PDF。若檔案預覽限制頁內跳轉，請直接往下閱讀完整四章。</p><p>電腦：可按 Ctrl+P（Mac為 ⌘P），或使用下方列印按鈕。</p><button id="print" class="js-only" type="button">開啟完整報告列印</button></aside><footer>@@FOOTER@@</footer></main>
 <script id="export-manifest" type="application/json">@@MANIFEST@@</script><script>@@JS@@</script></body></html>

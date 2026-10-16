@@ -20,7 +20,7 @@ metadata:
   review-model-version: "review-1.2"
   review-schema-version: "1.2"
   review-validator-version: "1.2.0"
-  html-renderer-version: "1.0.0"
+  html-renderer-version: "1.0.1"
   bar-validator-version: "1.0.0"
   language: "zh-TW"
 ---

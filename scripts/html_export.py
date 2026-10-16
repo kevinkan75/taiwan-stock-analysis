@@ -18,7 +18,7 @@ import review_guard as review
 from rules_core import SUMMARY_LABELS, timestamp
 
 ROOT = Path(__file__).resolve().parents[1]
-RENDERER_VERSION = '1.0.0'
+RENDERER_VERSION = '1.0.1'
 ASSETS = ROOT / 'assets/html-report'
 LABELS = {'fundamentals':'基本面','growth':'成長','valuation':'估值','industry':'產業','risk':'風險',
  'technical':'技術面','green':'🟢 綠燈','yellow':'🟡 黃燈','red':'🔴 紅燈','unknown':'⚪ 未評定',
@@ -86,7 +86,7 @@ def value_html(value):
 
 
 def table(headers,rows,caption):
-    return '<div class="table-scroll" tabindex="0" role="region" aria-label="'+esc(caption)+'"><table><caption>'+esc(caption)+'</caption><thead><tr>'+''.join('<th scope="col">'+esc(x)+'</th>' for x in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join('<td>'+v+'</td>' for v in row)+'</tr>' for row in rows)+'</tbody></table></div>'
+    return '<div class="table-scroll" tabindex="0" role="region" aria-label="'+esc(caption)+'"><table><caption>'+esc(caption)+'</caption><thead><tr>'+''.join('<th scope="col">'+esc(x)+'</th>' for x in headers)+'</tr></thead><tbody>'+''.join('<tr>'+''.join('<td data-label="'+esc(headers[i])+'">'+v+'</td>' for i,v in enumerate(row))+'</tr>' for row in rows)+'</tbody></table></div>'
 
 
 def details(title,body):return '<details><summary>'+esc(title)+'</summary>'+body+'</details>'
@@ -159,7 +159,7 @@ def render(s,r,raw,review_raw,exported_at=None):
     for label in SUMMARY_LABELS:
         lines=[line for line in s['report_markdown'].splitlines() if re.match(r'^\s*(?:[-*#>]+\s*)?(?:\*\*)?'+re.escape(label)+r'(?:\*\*)?\s*[:：]',line)]
         summary.append('<div class="card"><h3>'+esc(label)+'</h3><p>'+esc(lines[0] if lines else '請見原報告；來源未提供獨立摘要行')+'</p></div>')
-    overview+='<div class="cards">'+''.join(summary)+'</div><h2>六面向與證據</h2><div class="cards">'
+    overview+='<div class="cards">'+''.join(summary)+'</div><h2>六面向與證據</h2><div class="cards evidence-cards">'
     for key,d in list(s['scores'].items())+[('technical',s['technical'])]:
         istech=key=='technical'
         overview+='<article class="card"><h3>'+esc(LABELS[key])+'</h3><p>'+esc(LABELS.get(d.get('signal'),d.get('signal','未評定')))+'</p><p>'+('狀態：'+esc(LABELS.get(d['status'],d['status'])) if istech else '分數：'+esc(d['display_score'] if d['display_score'] is not None else '未評定')+' · 覆蓋：'+esc(str(d['coverage'])+'/'+str(d['total_items'])))+'</p>'+details('展開證據',value_html(d))+'</article>'

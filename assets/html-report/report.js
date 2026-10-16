@@ -19,7 +19,7 @@
     if (focus) tabs[index].focus();
   }
   tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activate(i));
+    tab.addEventListener('click', event => { event.preventDefault(); activate(i); });
     tab.addEventListener('keydown', event => {
       const next = {ArrowRight:(i+1)%4, ArrowLeft:(i+3)%4, Home:0, End:3}[event.key];
       if (next !== undefined) { event.preventDefault(); activate(next, true); }
@@ -45,4 +45,6 @@
     activate(selected); showData();
   });
   activate(0); showData();
+  document.documentElement.classList.add('js-ready');
+  document.getElementById('interaction-help').textContent = '可點選章節切換內容；列印與分享方式請見「列印／分享說明」。';
 })();
