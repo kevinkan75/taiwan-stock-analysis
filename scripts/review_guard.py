@@ -160,7 +160,7 @@ def validate(record, research, research_raw, dec=None, decision_raw=None, derive
     errors = stock.schema_errors(record,schema,schema)
     if errors:return {'valid':False,'scope':'structure','errors':errors,'derived':None}
     profile=('1.11.0','1.11.0') if legacy else ('1.12.0','1.12.0') if previous else (SKILL_VERSION,RULE_VERSION)
-    if (record['skill_version'],record['rule_version']) not in ({profile,('1.13.0','1.13.0')} if current else {profile}): errors.append('review: release/schema mismatch; do not backfill historical review')
+    if (record['skill_version'],record['rule_version']) not in ({profile,('1.14.0','1.14.0'),('1.13.0','1.13.0')} if current else {profile}): errors.append('review: release/schema mismatch; do not backfill historical review')
     result, verification = decision.validate_research(research)
     errors += result
     if verification=='manual_etf':errors.append('review: manually unvalidated legacy ETF cannot be certified')

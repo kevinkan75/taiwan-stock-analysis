@@ -173,7 +173,7 @@ def validate(s, research, research_sha256, derive_only=False):
     if (s['skill_version'], s['rule_version'], s['validator_version']) not in DECISION_PROFILES:
         errors.append('unsupported decision release profile')
     current_profile=(SKILL_VERSION,RULE_VERSION,DECISION_VALIDATOR_VERSION)
-    is_current=(s['skill_version'],s['rule_version'],s['validator_version']) in {current_profile, ('1.13.0','1.13.0','2.1.0'), ('1.12.0','1.12.0','2.1.0'), ('1.11.0','1.11.0','2.1.0'), ('1.10.0','1.10.0','2.0.0')}
+    is_current=(s['skill_version'],s['rule_version'],s['validator_version']) in {current_profile, ('1.14.0','1.14.0','2.1.0'), ('1.13.0','1.13.0','2.1.0'), ('1.12.0','1.12.0','2.1.0'), ('1.11.0','1.11.0','2.1.0'), ('1.10.0','1.10.0','2.0.0')}
     if s['model_version'] != (DECISION_MODEL_VERSION if is_current else 'decision-1.0'):
         errors.append('decision model and release profile disagree')
     rerrors, verification = validate_research(research)

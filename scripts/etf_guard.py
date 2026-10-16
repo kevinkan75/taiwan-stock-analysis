@@ -11,7 +11,7 @@ import sys
 import report_checks
 
 import snapshot_guard as stock
-from rules_core import (ETF_MODEL_VERSION, ETF_RELEASE_PROFILE, ETF_ANNUAL_PROFILE, ETF_CLAIM_PROFILE, ETF_REVIEW_PROFILE, ETF_ARCHIVED_PROFILE, ETF_PREVIOUS_PROFILE, ETF_DIMENSIONS,
+from rules_core import (ETF_MODEL_VERSION, ETF_RELEASE_PROFILE, ETF_HTML_PROFILE, ETF_ANNUAL_PROFILE, ETF_CLAIM_PROFILE, ETF_REVIEW_PROFILE, ETF_ARCHIVED_PROFILE, ETF_PREVIOUS_PROFILE, ETF_DIMENSIONS,
     ETF_QUALIFIERS, ETF_COVERAGE_MIN, dimension_result, weighted_total, rounded,
     finite, close, timestamp, rule_headers)
 from numeric_rules import premium_score, active_score, full_years
@@ -100,7 +100,7 @@ def arithmetic(name, metric):
 def semantic_errors(s):
     errors = []
     profile=ETF_ARCHIVED_PROFILE if s['model_version']=='etf-1.1' else ETF_RELEASE_PROFILE
-    if (s['skill_version'],s['rule_version'],s['validator_version']) not in ({profile,ETF_ANNUAL_PROFILE,ETF_PREVIOUS_PROFILE,ETF_REVIEW_PROFILE,ETF_CLAIM_PROFILE} if s['model_version']==ETF_MODEL_VERSION else {profile}):
+    if (s['skill_version'],s['rule_version'],s['validator_version']) not in ({profile,ETF_HTML_PROFILE,ETF_ANNUAL_PROFILE,ETF_PREVIOUS_PROFILE,ETF_REVIEW_PROFILE,ETF_CLAIM_PROFILE} if s['model_version']==ETF_MODEL_VERSION else {profile}):
         errors.append('unsupported ETF release profile')
     cutoff, analysis = timestamp(s['data_cutoff_at']), timestamp(s['analysis_at'])
     if cutoff > analysis: errors.append('cutoff after analysis')

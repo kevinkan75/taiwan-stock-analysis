@@ -2,7 +2,7 @@
   "snapshot_type": "review",
   "schema_version": "1.2",
   "model_version": "review-1.2",
-  "skill_version": "1.14.0",
+  "skill_version": "1.15.0",
   "rule_version": "1.14.0",
   "validator_version": "1.2.0",
   "security": {
@@ -17,7 +17,7 @@
   "mode": "research",
   "research_reference": {
     "reference": "attachment:snapshot.example.json",
-    "sha256": "fee5517eafb0cd2d337ca8ae405d2cc119a2a56cfce8358dd28f35ee072e389a",
+    "sha256": "5e13cb6c00dbd7484a5751649f12674e1065032c9f5caf94098d07c236e69be4",
     "rule_version": "1.14.0",
     "model_version": "1.3"
   },
