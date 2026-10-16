@@ -17,6 +17,7 @@ import decision_guard as decision
 import report_checks
 import evidence_audit
 import financial_history
+import research_views
 from rules_core import SKILL_VERSION, RULE_VERSION, timestamp
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -278,6 +279,7 @@ def validate(record, research, research_raw, dec=None, decision_raw=None, derive
     return {'valid':not errors,'scope':SCOPE,'errors':errors,'derived':assessment,
             'report_block':report_block(assessment),
             **({'financial_history_report':financial_history.render(assessment['financial_history'])} if current else {}),
+            **({'thesis_comparison_report':research_views.thesis_markdown(research,record)} if not legacy else {}),
             'limitation':'Attempt logs, source authority and facts remain manually supplied; no accuracy or speed claim.'}
 
 

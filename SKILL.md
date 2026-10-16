@@ -20,7 +20,7 @@ metadata:
   review-model-version: "review-1.2"
   review-schema-version: "1.2"
   review-validator-version: "1.2.0"
-  html-renderer-version: "1.0.1"
+  html-renderer-version: "1.1.0"
   bar-validator-version: "1.0.0"
   language: "zh-TW"
 ---
@@ -43,6 +43,8 @@ metadata:
 ## 作業狀態與信心（1.13.0）
 
 完整個股／ETF報告另依[作業紀錄與取數流程](references/research-process.md)建立共用.review.json；啟動時載入一次即可。固定區分作業是否完成最低查核、決策證據是否足夠及等待原因，等待不等於價格不利。另讀[逐項主張與反證](references/evidence-audit.md)，另依[三年財務趨勢與報表勾稽](references/financial-history.md)填最近三個完整年度，在同一review填來源定位、可重算主張、反方及實際論點的失效條件；定稿執行review_guard預設驗證，與既有研究／ETF及決策驗證併用。追問信心時解釋原等級及證據，不新增無校準的百分比或主觀分數；程式核對不代表來源真實或投資勝率。
+
+多空論點對照沿用同一review：依evidence-audit.md將論點明確連到支持主張、反方、處理結果及重評條件；由目前執行技能的模型依序審查，不另串接模型API。HTML呈現器1.1.0依實際紀錄顯示對照及查核階段，既有原檔未建立的連結維持缺口，不推造補齊。
 
 ## 工作立場
 

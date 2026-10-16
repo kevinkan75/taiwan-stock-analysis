@@ -69,6 +69,18 @@ DCF仍須依calculations.md人工建立口徑調節：FCFF搭配WACC，FCFE搭�
 
 ## 反方與失效條件
 
+### 多空論點對照
+
+沿用同一份review，不另建角色分數或來源清單。先完成研究，再由目前執行技能的模型依序檢視支持論點、針對該論點的反方質疑及綜合判斷；後一步須實際閱讀前一步內容，不把角色名稱或觀點並列當成已消除偏見。反方不是固定唱反調，沒有證據時記為待查假設。
+
+新完整報告中，每項已形成的research.thesis[i]建立一筆kind=inference主張，value填該論點原文、targets填`research:/thesis/i`，premises引用實際支持主張；期間、口徑、reason依本次研究填寫。推論採reviewed或unresolved，不填supported；前提未解決時不得把根論點標為reviewed。沿用既有JSON pointer、前提圖與來源驗證，不修改schema或研究門檻。
+
+用counter_cases.thesis_index記錄質疑針對哪個論點，claim_ids只引用該質疑實際依賴的證據或假設，不能把反方claim_ids直接當成多方支持依據。沿用既有三項反方總數，無需每個論點再發明三項。逐項讀完後，在impact記錄受影響的具體分數／估值假設／關卡及採用理由，follow_up記下一步；成立時先按原規則修正，再標adjusted。disclosed僅代表已揭露，不得改寫為「維持判斷」或「風險已排除」。unresolved維持原有限制。
+
+將「原始論點、支持依據、反方質疑、處理結果、重新評估條件」列為對照表。`review_guard --render`的thesis_comparison_report依明確連結產生文字草稿，可納入定稿再按原流程綁定與驗證；來源及定性判斷仍須人工核對，文字表格不是新增驗證憑證。快速版保持精簡，詳細版展開依據；既有研究及決策規則不變。
+
+既有有效原檔可原樣呈現；缺少明確支持連結、對應反方或失效條件時顯示缺口，不以相似文字、同一來源或事後推測補連結。沒有形成論點時保留不足狀態。對照視圖不新增勝率、權重或交易指令。
+
 已形成論點時，counter_cases保留最可能推翻結論的三個原因；每項連結實際thesis_index、
 claim_ids、scenario、impact、disposition（adjusted／disclosed／unresolved）、follow_up及report_excerpt。
 描述若成立會改變哪個分數、假設或關卡，先依既有規則處理再標adjusted；純揭露填disclosed。

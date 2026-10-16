@@ -91,7 +91,7 @@ def main():
     try:export.render(bad,r,raw,rr,AT)
     except ValueError:check(True,'invalid source rejected without repair')
     else:check(False,'invalid source exported')
-    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.0.1','9.9.9')]:
+    for old,new in [('18.00','19.00'),('證據充分性<b>足夠','證據充分性<b>不足'),('原研究訊號','偽造訊號'),('1.1.0','9.9.9')]:
         try:export.verify(output.replace(old,new,1),*args)
         except ValueError:check(True,'reject tampered '+old)
         else:check(False,'tampered export accepted '+old)
