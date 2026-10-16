@@ -93,7 +93,8 @@ analyze-stocks/
 
 | 項目 | 目前版本 | 說明 |
 |---|---|---|
-| 技能 | 1.14.0 | 見 SKILL.md `metadata.version` 與 CHANGELOG.md |
+| 發布套件 | 1.14.1-preview.1 | HTML修正patch；保留預發布狀態 |
+| 研究技能相容版本 | 1.14.0 | 見 SKILL.md `metadata.version` 與 CHANGELOG.md |
 | 快照格式 schema | 1.5 | 1.2／1.3／1.4仍按原模型驗證，不回填新欄位 |
 | 評分模型 model | 1.3 | 保留權重及原始門檻，整合R1–R3、資格三態與R6信心 |
 | ETF評分模型 | etf-1.2 | 獨立schema 1.1；驗證子類型數值，保留etf-1.1歷史分支 |
@@ -129,7 +130,7 @@ GitHub Actions已設定Linux／Windows與Python 3.8、3.12、3.14的矩陣，以
 
 將本技能目錄獨立作為GitHub專案根目錄，保留本技能的公開檔案與發布設定，不沿用個人技能共用儲存庫的歷史。提交前執行完整檢查，確認沒有帳號資料、實際分析報告或本機輸入。`.gitignore`只防止一般誤加入，不能替代逐項檢查。
 
-建議首個公開版本標示為Pre-release，說明核心研究範圍與HTML實驗限制，附可安裝ZIP及SHA-256。待跨平台CI與瀏覽器驗收完成，再評估標為穩定版本。儲存庫名稱建議 `analyze-stocks`；尚未建立公開儲存庫前，不提供虛構的下載網址或CI通過標章。
+公開版本見 [GitHub Releases](https://github.com/kevinkan75/taiwan-stock-analysis/releases)。1.14.1-preview.1為HTML修正patch，提供安裝ZIP、相對上一公開版的差異patch及SHA-256；研究技能與規則相容版本維持1.14.0，HTML呈現器為1.0.1。仍保留Pre-release，完整鍵盤及列印等瀏覽器驗收完成後再評估穩定發布。
 
 ## 使用須知與免責
 
