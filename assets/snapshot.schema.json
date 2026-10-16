@@ -1,0 +1,1935 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "analyze-stocks snapshots 1.2/1.3/1.4/1.5 with corresponding models",
+  "description": "Canonical new snapshots. Legacy snapshots remain unchanged. Structure is not verification of external facts.",
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_or_estimate": {
+          "enum": [
+            "actual",
+            "estimate",
+            null
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        },
+        "value_status": {
+          "enum": [
+            "reported",
+            "calculated",
+            "estimated",
+            "missing",
+            "not_applicable"
+          ]
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inputs": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "currency",
+        "period",
+        "as_of",
+        "actual_or_estimate",
+        "basis",
+        "source_url",
+        "retrieved_at",
+        "source_type",
+        "value_status",
+        "formula",
+        "inputs"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "enum": [
+            0,
+            1,
+            2,
+            null
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "check",
+        "score",
+        "reason",
+        "period",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "dimension": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "coverage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "total_items": {
+          "const": 3
+        },
+        "raw_score": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display_score": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "weight",
+        "coverage",
+        "total_items",
+        "raw_score",
+        "display_score",
+        "signal"
+      ],
+      "additionalProperties": false
+    },
+    "indicator": {
+      "type": "object",
+      "properties": {
+        "last_close": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sma20": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sma60": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sma120": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rsi14": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "macd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "macd_signal": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relative_volume20": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "last_close",
+        "sma20",
+        "sma60",
+        "sma120",
+        "rsi14",
+        "macd",
+        "macd_signal",
+        "relative_volume20"
+      ],
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "enum": [
+            "conservative",
+            "base",
+            "optimistic"
+          ]
+        },
+        "model_price": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assumptions": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "formula": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "label",
+        "model_price",
+        "assumptions",
+        "formula",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "limited",
+            "fail"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "check",
+        "status",
+        "reason",
+        "metrics"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "title",
+        "published_at",
+        "retrieved_at",
+        "source_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "enum": [
+        "1.2",
+        "1.3",
+        "1.4",
+        "1.5"
+      ]
+    },
+    "model_version": {
+      "enum": [
+        "1.0",
+        "1.1",
+        "1.2",
+        "1.3"
+      ]
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exchange": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instrument": {
+          "enum": [
+            "ordinary",
+            "adr"
+          ]
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "symbol",
+        "exchange",
+        "instrument",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "analysis_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data_cutoff_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "analysis_scope": {
+      "enum": [
+        "current",
+        "historical"
+      ]
+    },
+    "quote_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "quote_status": {
+      "enum": [
+        "close",
+        "intraday",
+        "delayed",
+        "unknown"
+      ]
+    },
+    "financial_period_end": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "mode": {
+      "enum": [
+        "quick",
+        "detailed"
+      ]
+    },
+    "horizon": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "web": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "documents": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "python": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "storage": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "resources",
+        "web",
+        "documents",
+        "python",
+        "storage"
+      ],
+      "additionalProperties": false
+    },
+    "eligibility": {
+      "type": "object",
+      "properties": {
+        "quote_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            }
+          ]
+        },
+        "quote_is_current": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            }
+          ]
+        },
+        "financials_verified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "pass",
+                "fail"
+              ]
+            }
+          ]
+        },
+        "valuation_supported": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            }
+          ]
+        },
+        "reasons": {
+          "type": "object",
+          "properties": {
+            "quote_verified": {
+              "type": "string",
+              "minLength": 1
+            },
+            "quote_is_current": {
+              "type": "string",
+              "minLength": 1
+            },
+            "financials_verified": {
+              "type": "string",
+              "minLength": 1
+            },
+            "valuation_supported": {
+              "type": "string",
+              "minLength": 1
+            },
+            "financials_dependent": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "quote_verified",
+            "quote_is_current",
+            "financials_verified",
+            "valuation_supported"
+          ],
+          "additionalProperties": false
+        },
+        "financials_dependent": {
+          "type": "boolean",
+          "description": "1.4.0. Absent means true (conservative). 1.4.1: False is accepted only if snapshot_guard finds no statement-derived content in the record (scores for earnings_quality, balance_sheet, capital_efficiency, financial_event_buffer; metrics such as ROE, FCF, debt, current ratio, cash conversion, net assets; P/B band or ROE/net-asset valuation method). The flag is checked against content, not trusted. 1.4.2: financials_verified never takes limited; dependent-but-unread statements are fail."
+        }
+      },
+      "required": [
+        "quote_verified",
+        "quote_is_current",
+        "financials_verified",
+        "valuation_supported",
+        "reasons"
+      ],
+      "additionalProperties": false
+    },
+    "major_risk": {
+      "type": "object",
+      "properties": {
+        "confirmed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "confirmed",
+        "reason",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "$ref": "#/$defs/metric"
+        }
+      },
+      "required": [
+        "price",
+        "market_cap",
+        "eps_ttm",
+        "pe_ttm",
+        "revenue_growth_q2",
+        "eps_growth_q2",
+        "roe_ttm",
+        "gross_margin_q2",
+        "fcf_ttm",
+        "cash_yield"
+      ],
+      "additionalProperties": {
+        "$ref": "#/$defs/metric"
+      }
+    },
+    "valuation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "horizon": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assumption_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "minItems": 0
+        },
+        "sensitivity_only": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "minItems": 0
+        },
+        "multiple_basis": {
+          "anyOf": [
+            {
+              "enum": [
+                "self_history",
+                "vendor_band",
+                "peers",
+                "mixed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "model 1.1: where scenario multiples come from"
+        },
+        "eps_basis": {
+          "anyOf": [
+            {
+              "enum": [
+                "actual_ttm",
+                "company_guidance_derived",
+                "external_single",
+                "external_multi",
+                "analysis_assumption",
+                "mixed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "model 1.1: where scenario EPS or book value comes from"
+        },
+        "band": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "metric": {
+                  "enum": [
+                    "pe",
+                    "pb"
+                  ]
+                },
+                "low": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "median": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "high": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "current": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "period": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "observations": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "basis": {
+                  "enum": [
+                    "self_history",
+                    "vendor_band"
+                  ]
+                },
+                "source_urls": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+                  },
+                  "minItems": 1
+                },
+                "current_metric": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "rule 1.6.0: matching metric key pe_ttm, pe_forward or pb_current"
+                }
+              },
+              "required": [
+                "metric",
+                "low",
+                "median",
+                "high",
+                "current",
+                "period",
+                "observations",
+                "basis",
+                "source_urls"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "model 1.1: historical multiple band and current position"
+        },
+        "primary_metric": {
+          "enum": [
+            "pe",
+            "pb",
+            "ev_sales",
+            "ev_ebitda",
+            "dcf",
+            "other"
+          ]
+        },
+        "guardrails": {
+          "type": "object",
+          "properties": {
+            "r1": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_applicable",
+                    "clean",
+                    "adjusted",
+                    "four_quarter_average",
+                    "unadjusted",
+                    "unconfirmed"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_urls": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+                  },
+                  "minItems": 0
+                },
+                "reference_book_value": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "quarterly_book_values": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "maxItems": 4
+                },
+                "checks": {
+                  "type": "object",
+                  "properties": {
+                    "latest_book_value": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "previous_book_value": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "oci_share_of_book_change": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "listed_holding_share": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "latest_book_value",
+                    "previous_book_value",
+                    "oci_share_of_book_change",
+                    "listed_holding_share"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "status",
+                "reason",
+                "source_urls",
+                "reference_book_value",
+                "quarterly_book_values",
+                "checks"
+              ],
+              "additionalProperties": false
+            },
+            "r2": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_applicable",
+                    "comparable",
+                    "adjusted_multiple",
+                    "unconfirmed"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_urls": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+                  },
+                  "minItems": 0
+                },
+                "ttm_roe_pct": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "annual_roe_pct": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "selected_multiple": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "adjustment_method": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "approx_p25",
+                        "pb_roe"
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "status",
+                "reason",
+                "source_urls",
+                "ttm_roe_pct",
+                "annual_roe_pct",
+                "selected_multiple",
+                "adjustment_method"
+              ],
+              "additionalProperties": false
+            },
+            "r3": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_applicable",
+                    "checked",
+                    "unconfirmed"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_urls": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+                  },
+                  "minItems": 0
+                },
+                "models": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "base_model_price": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "currency": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "instrument": {
+                        "enum": [
+                          "ordinary",
+                          "adr"
+                        ]
+                      },
+                      "source_urls": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+                        },
+                        "minItems": 1
+                      },
+                      "post_adjustment": {
+                        "const": true
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "base_model_price",
+                      "currency",
+                      "instrument",
+                      "source_urls",
+                      "post_adjustment",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "reason",
+                "source_urls",
+                "models"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "r1",
+            "r2",
+            "r3"
+          ],
+          "additionalProperties": false
+        },
+        "applied_adjustments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rule": {
+                "enum": [
+                  "R1",
+                  "R2",
+                  "R3"
+                ]
+              },
+              "check": {
+                "enum": [
+                  "model_upside",
+                  "comparable_valuation",
+                  "scenario_resilience"
+                ]
+              },
+              "maximum_score": {
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  null
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "rule",
+              "check",
+              "maximum_score",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "method",
+        "horizon",
+        "assumption_sources",
+        "scenarios",
+        "sensitivity_only"
+      ],
+      "additionalProperties": false
+    },
+    "technical": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "computed",
+            "not_run",
+            "insufficient_data"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "indicators": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/indicator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red"
+          ]
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          }
+        },
+        "observation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "adjustment": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "as_of",
+        "indicators",
+        "signal",
+        "source_urls",
+        "observation_count",
+        "adjustment"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/validation"
+      },
+      "minItems": 0
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "fundamentals": {
+          "$ref": "#/$defs/dimension"
+        },
+        "growth": {
+          "$ref": "#/$defs/dimension"
+        },
+        "valuation": {
+          "$ref": "#/$defs/dimension"
+        },
+        "industry": {
+          "$ref": "#/$defs/dimension"
+        },
+        "risk": {
+          "$ref": "#/$defs/dimension"
+        }
+      },
+      "required": [
+        "fundamentals",
+        "growth",
+        "valuation",
+        "industry",
+        "risk"
+      ],
+      "additionalProperties": false
+    },
+    "overall": {
+      "type": "object",
+      "properties": {
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red",
+            "major_risk"
+          ]
+        },
+        "score": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_score": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provisional": {
+          "type": "boolean",
+          "description": "model 1.1 only: true when the signal is a provisional (暫定) judgment below full eligibility"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "model 1.1 only: high=full eligibility, medium/low=provisional, null=no signal"
+        }
+      },
+      "required": [
+        "signal",
+        "score",
+        "raw_score",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "thesis": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "invalidation_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "enum": [
+              "occurred",
+              "scheduled",
+              "unknown"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_url": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          }
+        },
+        "required": [
+          "event_date",
+          "published_at",
+          "status",
+          "description",
+          "source_url"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "minItems": 0
+    },
+    "data_gaps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "previous_report_reference": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "analysis_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "skill_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "rule_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "validator_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d+\\.\\d+\\.\\d+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "model_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "reference",
+            "analysis_at",
+            "schema_version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "report_markdown": {
+      "type": "string",
+      "minLength": 1
+    },
+    "report_reference": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "reference"
+      ],
+      "additionalProperties": false
+    },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "rule_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "validator_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "report_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sensitivity": {
+      "type": "object",
+      "properties": {
+        "checked": {
+          "type": "boolean"
+        },
+        "fragile": {
+          "type": "boolean"
+        },
+        "confidence_cap": {
+          "enum": [
+            "medium",
+            null
+          ]
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimension": {
+                "enum": [
+                  "fundamentals",
+                  "growth",
+                  "valuation",
+                  "industry",
+                  "risk"
+                ]
+              },
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "from_score": {
+                "enum": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "to_score": {
+                "enum": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "signal": {
+                "enum": [
+                  "unknown",
+                  "green",
+                  "yellow",
+                  "red",
+                  "major_risk"
+                ]
+              },
+              "changed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "dimension",
+              "check",
+              "from_score",
+              "to_score",
+              "signal",
+              "changed"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "checked",
+        "fragile",
+        "confidence_cap",
+        "cases"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "model_version",
+    "security",
+    "analysis_at",
+    "data_cutoff_at",
+    "analysis_scope",
+    "quote_at",
+    "quote_status",
+    "financial_period_end",
+    "mode",
+    "horizon",
+    "capabilities",
+    "eligibility",
+    "major_risk",
+    "metrics",
+    "valuation",
+    "technical",
+    "validation",
+    "scores",
+    "overall",
+    "thesis",
+    "invalidation_conditions",
+    "events",
+    "risks",
+    "sources",
+    "data_gaps",
+    "previous_report_reference"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "properties": {
+        "schema_version": {
+          "const": "1.2"
+        },
+        "model_version": {
+          "const": "1.0"
+        },
+        "eligibility": {
+          "properties": {
+            "quote_verified": {
+              "type": "boolean"
+            },
+            "quote_is_current": {
+              "type": "boolean"
+            },
+            "financials_verified": {
+              "type": "boolean"
+            },
+            "valuation_supported": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": "1.3"
+        },
+        "model_version": {
+          "const": "1.1"
+        },
+        "eligibility": {
+          "properties": {
+            "quote_verified": {
+              "type": "boolean"
+            },
+            "quote_is_current": {
+              "type": "boolean"
+            },
+            "financials_verified": {
+              "type": "boolean"
+            },
+            "valuation_supported": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": "1.4"
+        },
+        "model_version": {
+          "const": "1.2"
+        },
+        "eligibility": {
+          "properties": {
+            "quote_verified": {
+              "type": "boolean"
+            },
+            "quote_is_current": {
+              "type": "boolean"
+            },
+            "financials_verified": {
+              "type": "boolean"
+            },
+            "valuation_supported": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema_version": {
+          "const": "1.5"
+        },
+        "model_version": {
+          "const": "1.3"
+        },
+        "eligibility": {
+          "properties": {
+            "quote_verified": {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            },
+            "quote_is_current": {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            },
+            "financials_verified": {
+              "enum": [
+                "pass",
+                "fail"
+              ]
+            },
+            "valuation_supported": {
+              "enum": [
+                "pass",
+                "limited",
+                "fail"
+              ]
+            }
+          }
+        },
+        "valuation": {
+          "required": [
+            "primary_metric",
+            "guardrails",
+            "applied_adjustments"
+          ]
+        }
+      },
+      "required": [
+        "skill_version",
+        "rule_version",
+        "validator_version",
+        "report_markdown",
+        "report_sha256",
+        "sensitivity"
+      ]
+    }
+  ]
+}

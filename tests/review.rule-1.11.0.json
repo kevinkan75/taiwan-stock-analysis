@@ -1,0 +1,135 @@
+{
+  "snapshot_type": "review",
+  "schema_version": "1.0",
+  "model_version": "review-1.0",
+  "skill_version": "1.11.0",
+  "rule_version": "1.11.0",
+  "validator_version": "1.0.0",
+  "security": {
+    "name": "範例公司（合成資料，非真實標的）",
+    "symbol": "EXAMPLE",
+    "exchange": "TWSE",
+    "instrument": "ordinary",
+    "currency": "TWD"
+  },
+  "analysis_at": "2026-10-08T18:00:00+08:00",
+  "data_cutoff_at": "2026-10-08T13:30:00+08:00",
+  "mode": "research",
+  "research_reference": {
+    "reference": "attachment:snapshot.example.json",
+    "sha256": "324d48d8b09e9b481748a52a07bb5e6947972b087ec65817deb1b11b086a84d0",
+    "rule_version": "1.11.0",
+    "model_version": "1.3"
+  },
+  "decision_reference": null,
+  "tasks": [
+    {
+      "id": "quote",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：quote",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "financials",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：financials",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "valuation",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：valuation",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：events",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：growth",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "industry",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：industry",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    }
+  ],
+  "sources": [],
+  "assessment": {
+    "workflow_status": "complete",
+    "evidence_status": "sufficient",
+    "pending_tasks": [],
+    "unresolved_tasks": [],
+    "waiting_reasons": [],
+    "research_confidence": "high",
+    "primary_source_count": 1,
+    "alternative_source_count": 0,
+    "attempt_count": 6
+  }
+}

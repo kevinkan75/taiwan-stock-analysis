@@ -1,0 +1,12 @@
+# Review bindings and archived fixtures hash exact bytes on every platform.
+* text=auto eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.svg text eol=lf
+*.zip -text

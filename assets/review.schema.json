@@ -1,0 +1,1876 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shared stock/ETF workflow, claim audit and annual statements 1.2",
+  "$defs": {
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "title",
+        "published_at",
+        "retrieved_at",
+        "source_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "snapshot_type": {
+      "const": "review"
+    },
+    "schema_version": {
+      "const": "1.2"
+    },
+    "model_version": {
+      "const": "review-1.2"
+    },
+    "skill_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rule_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_version": {
+      "const": "1.2.0"
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exchange": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instrument": {
+          "enum": [
+            "ordinary",
+            "adr",
+            "etf"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "symbol",
+        "exchange",
+        "currency",
+        "instrument"
+      ],
+      "additionalProperties": false
+    },
+    "analysis_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data_cutoff_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mode": {
+      "enum": [
+        "research",
+        "decision"
+      ]
+    },
+    "research_reference": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rule_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "reference",
+        "sha256",
+        "rule_version",
+        "model_version"
+      ],
+      "additionalProperties": false
+    },
+    "decision_reference": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "rule_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "model_version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "reference",
+            "sha256",
+            "rule_version",
+            "model_version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "obtained",
+              "not_run",
+              "partial",
+              "not_published",
+              "access_failed",
+              "conflicting",
+              "incompatible",
+              "not_applicable"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attempts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "stage": {
+                  "enum": [
+                    "primary",
+                    "alternative",
+                    "calculation"
+                  ]
+                },
+                "source_url": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "request": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "result": {
+                  "enum": [
+                    "success",
+                    "unavailable",
+                    "blocked",
+                    "conflict",
+                    "incompatible"
+                  ]
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "authority_basis": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "stage",
+                "source_url",
+                "at",
+                "request",
+                "result",
+                "detail",
+                "authority_basis"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "reason",
+          "attempts"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "properties": {
+        "workflow_status": {
+          "enum": [
+            "incomplete",
+            "complete"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "sufficient",
+            "insufficient"
+          ]
+        },
+        "pending_tasks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "unresolved_tasks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "waiting_reasons": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "data_pending",
+              "event_pending",
+              "price_conditions",
+              "risk_conditions"
+            ]
+          }
+        },
+        "research_confidence": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            null
+          ]
+        },
+        "primary_source_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "alternative_source_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempt_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "claim_audit": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "not_run",
+                "partial",
+                "complete"
+              ]
+            },
+            "claims": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unresolved_claims": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "material_unresolved": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "thesis_status": {
+              "enum": [
+                "established",
+                "insufficient"
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "claims",
+            "unresolved_claims",
+            "material_unresolved",
+            "thesis_status"
+          ],
+          "additionalProperties": false
+        },
+        "financial_history": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "workflow_status",
+        "evidence_status",
+        "pending_tasks",
+        "unresolved_tasks",
+        "waiting_reasons",
+        "research_confidence",
+        "primary_source_count",
+        "alternative_source_count",
+        "attempt_count",
+        "claim_audit",
+        "financial_history"
+      ],
+      "additionalProperties": false
+    },
+    "evidence_audit": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not_run",
+            "partial",
+            "complete"
+          ]
+        },
+        "thesis_status": {
+          "enum": [
+            "established",
+            "insufficient"
+          ]
+        },
+        "coverage_note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "fact",
+                  "guidance",
+                  "estimate",
+                  "assumption",
+                  "inference",
+                  "calculation"
+                ]
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "period": {
+                "type": "string",
+                "minLength": 1
+              },
+              "basis": {
+                "type": "string",
+                "minLength": 1
+              },
+              "targets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "report_excerpt": {
+                "type": "string"
+              },
+              "material": {
+                "type": "boolean"
+              },
+              "verdict": {
+                "enum": [
+                  "supported",
+                  "reviewed",
+                  "unresolved",
+                  "refuted"
+                ]
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "locator": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "published_at": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "period": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "rank": {
+                      "enum": [
+                        "primary",
+                        "secondary"
+                      ]
+                    },
+                    "retrieval": {
+                      "enum": [
+                        "web",
+                        "document",
+                        "user_document",
+                        "memory"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "locator",
+                    "published_at",
+                    "period",
+                    "basis",
+                    "value",
+                    "rank",
+                    "retrieval"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "selected_source": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "minimum": 0,
+                    "type": "null"
+                  }
+                ]
+              },
+              "premises": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "calculation": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "method": {
+                        "enum": [
+                          "sum",
+                          "subtract",
+                          "product",
+                          "divide",
+                          "ratio_pct",
+                          "change_pct",
+                          "manual"
+                        ]
+                      },
+                      "inputs": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        }
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "method",
+                      "inputs",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "statement",
+              "value",
+              "unit",
+              "period",
+              "basis",
+              "targets",
+              "report_excerpt",
+              "material",
+              "verdict",
+              "sources",
+              "selected_source",
+              "premises",
+              "calculation",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "counter_cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "thesis_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "claim_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "report_excerpt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scenario": {
+                "type": "string",
+                "minLength": 1
+              },
+              "impact": {
+                "type": "string",
+                "minLength": 1
+              },
+              "disposition": {
+                "enum": [
+                  "adjusted",
+                  "disclosed",
+                  "unresolved"
+                ]
+              },
+              "follow_up": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "thesis_index",
+              "claim_ids",
+              "report_excerpt",
+              "scenario",
+              "impact",
+              "disposition",
+              "follow_up"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "invalidation_conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "thesis_index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "claim_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "report_excerpt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "driver": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "trigger": {
+                "type": "string",
+                "minLength": 1
+              },
+              "review_on": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "thesis_index",
+              "claim_ids",
+              "report_excerpt",
+              "driver",
+              "observable",
+              "trigger",
+              "review_on"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "thesis_status",
+        "coverage_note",
+        "claims",
+        "counter_cases",
+        "invalidation_conditions"
+      ],
+      "additionalProperties": false
+    },
+    "financial_history": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not_run",
+            "attempted",
+            "not_applicable"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "basis": {
+          "const": "consolidated"
+        },
+        "latest_period_end": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "periods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "period_start": {
+                "type": "string",
+                "format": "date"
+              },
+              "period_end": {
+                "type": "string",
+                "format": "date"
+              },
+              "one_off_note": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inputs": {
+                "type": "object",
+                "properties": {
+                  "revenue": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "gross_profit": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "operating_income": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "net_income_parent": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "diluted_eps": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "total_assets": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "total_liabilities": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "total_equity": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "parent_equity_begin": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "parent_equity_end": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cash_bs_end": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cash_cf_end": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cfo": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cash_ppe_purchases": {
+                    "type": "object",
+                    "properties": {
+                      "raw_value": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "scale": {
+                        "enum": [
+                          null,
+                          1,
+                          1000,
+                          1000000,
+                          100000000
+                        ]
+                      },
+                      "source_url": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "locator": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "period_start": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "period_end": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "raw_value",
+                      "scale",
+                      "source_url",
+                      "locator",
+                      "period_start",
+                      "period_end"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "revenue",
+                  "gross_profit",
+                  "operating_income",
+                  "net_income_parent",
+                  "diluted_eps",
+                  "total_assets",
+                  "total_liabilities",
+                  "total_equity",
+                  "parent_equity_begin",
+                  "parent_equity_end",
+                  "cash_bs_end",
+                  "cash_cf_end",
+                  "cfo",
+                  "cash_ppe_purchases"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "period_start",
+              "period_end",
+              "one_off_note",
+              "inputs"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "currency",
+        "basis",
+        "latest_period_end",
+        "periods"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "snapshot_type",
+    "schema_version",
+    "model_version",
+    "skill_version",
+    "rule_version",
+    "validator_version",
+    "security",
+    "analysis_at",
+    "data_cutoff_at",
+    "mode",
+    "research_reference",
+    "decision_reference",
+    "tasks",
+    "sources",
+    "assessment",
+    "evidence_audit",
+    "financial_history"
+  ],
+  "additionalProperties": false
+}

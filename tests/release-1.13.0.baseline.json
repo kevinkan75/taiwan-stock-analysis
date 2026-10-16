@@ -1,0 +1,12 @@
+{
+  "files": {
+    "tests/snapshot.rule-1.13.0.json": "39c52d2b30ac9b12df08c304f86bd60101b37f8104e2dfe219d835b55de20efe",
+    "tests/etf.rule-1.13.0.json": "f9b5505680fda7ae3ed78dccadabcb157543118079e5649962307709ed38bdd8",
+    "tests/decision.rule-1.13.0.json": "44dadbb9fc8dbb16d9de342cd8a0107a4d9f10f3f0db31b0abb5f83c7dffd93b",
+    "tests/review.rule-1.13.0.json": "bc92e82a3feb2a6c02f5a1f4b7095dd49b3d6aa5b31ea84187e3e47c17709c0b"
+  },
+  "derived": {
+    "snapshot": "fb82685017b60f7f445d21a1b96e17cf3ad872bb2e968ead5522ee4a0d907507",
+    "etf": "b40bd391c493d898f7c4222fca97be6c440a7927eb7c81a76e06158a81e62efb"
+  }
+}

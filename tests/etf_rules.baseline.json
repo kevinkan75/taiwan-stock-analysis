@@ -1,0 +1,5 @@
+{
+  "input": "tests/etf.rule-1.9.0.json",
+  "input_sha256": "6fe4ac42e3dce416388b5cac24eac00552c5cc445f47cd7a6e78e26fadf7edba",
+  "derived_sha256": "7a36005277624b83a4c3947d996f83b57dcc25d861faff2d7e00c904ede4498e"
+}

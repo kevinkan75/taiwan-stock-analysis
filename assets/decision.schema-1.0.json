@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Decision conclusion records 1.0; manually assessed gates",
+  "description": "Verifies conclusion selection, provenance and report rows. Not a gate-evidence or ETF scoring validator.",
+  "$defs": {
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "title",
+        "published_at",
+        "retrieved_at",
+        "source_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "snapshot_type": {
+      "const": "decision"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "model_version": {
+      "const": "decision-1.0"
+    },
+    "skill_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rule_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exchange": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instrument": {
+          "enum": [
+            "ordinary",
+            "adr",
+            "etf"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "symbol",
+        "exchange",
+        "currency",
+        "instrument"
+      ],
+      "additionalProperties": false
+    },
+    "analysis_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data_cutoff_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "research_reference": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "model_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "analysis_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "data_cutoff_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verification": {
+          "enum": [
+            "stock_snapshot",
+            "manual_etf",
+            "etf_snapshot"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "sha256",
+        "model_version",
+        "rule_version",
+        "analysis_at",
+        "data_cutoff_at",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "quote_context": {
+      "type": "object",
+      "properties": {
+        "latest_completed_session_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "latest_completed_session_at",
+        "verified_at",
+        "reason",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "signal": {
+            "enum": [
+              "green",
+              "yellow",
+              "red",
+              "unknown"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "number",
+          "signal",
+          "reason",
+          "source_urls"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 8,
+      "maxItems": 8
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "upgrade": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "downgrade": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "waiting_for": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "enum": [
+                  "quote",
+                  "gate_1",
+                  "gate_2",
+                  "gate_3",
+                  "gate_4",
+                  "gate_5",
+                  "gate_6",
+                  "gate_7",
+                  "gate_8",
+                  "research"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "target",
+              "description"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "batches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "trigger": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requires_clearance": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "quote",
+                    "gate_1",
+                    "gate_2",
+                    "gate_3",
+                    "gate_4",
+                    "gate_5",
+                    "gate_6",
+                    "gate_7",
+                    "gate_8"
+                  ]
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "trigger",
+              "requires_clearance"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "upgrade",
+        "downgrade",
+        "waiting_for",
+        "batches"
+      ],
+      "additionalProperties": false
+    },
+    "conclusion": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "enum": [
+            "abandon",
+            "wait",
+            "enter",
+            "staged"
+          ]
+        },
+        "clause": {
+          "enum": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "trigger_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "missing_gates": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "minItems": 0
+        },
+        "blocking_direct_entry": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "minItems": 0
+        },
+        "first_batch_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "action",
+        "clause",
+        "trigger_codes",
+        "missing_gates",
+        "blocking_direct_entry",
+        "first_batch_requirements"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "minItems": 0
+    },
+    "report_markdown": {
+      "type": "string",
+      "minLength": 1
+    },
+    "report_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "snapshot_type",
+    "schema_version",
+    "model_version",
+    "skill_version",
+    "rule_version",
+    "validator_version",
+    "security",
+    "analysis_at",
+    "data_cutoff_at",
+    "research_reference",
+    "quote_context",
+    "gates",
+    "conditions",
+    "conclusion",
+    "sources",
+    "report_markdown",
+    "report_sha256"
+  ],
+  "additionalProperties": false
+}

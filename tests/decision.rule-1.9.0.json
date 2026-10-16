@@ -1,0 +1,149 @@
+{
+  "snapshot_type": "decision",
+  "schema_version": "1.0",
+  "model_version": "decision-1.0",
+  "skill_version": "1.9.0",
+  "rule_version": "1.9.0",
+  "validator_version": "1.1.0",
+  "security": {
+    "name": "範例公司（合成資料，非真實標的）",
+    "symbol": "EXAMPLE",
+    "exchange": "TWSE",
+    "instrument": "ordinary",
+    "currency": "TWD"
+  },
+  "analysis_at": "2026-10-08T18:05:00+08:00",
+  "data_cutoff_at": "2026-10-08T13:30:00+08:00",
+  "research_reference": {
+    "reference": "attachment:research.decision.example.json",
+    "sha256": "2efc5f917545924e5ab3188b9b00be03e59452ce27c19dbbb3743b2b61cbafbb",
+    "model_version": "1.3",
+    "rule_version": "1.7.0",
+    "analysis_at": "2026-10-08T18:00:00+08:00",
+    "data_cutoff_at": "2026-10-08T13:30:00+08:00",
+    "verification": "stock_snapshot"
+  },
+  "quote_context": {
+    "latest_completed_session_at": "2026-10-08T13:30:00+08:00",
+    "verified_at": "2026-10-08T18:05:00+08:00",
+    "reason": "合成交易時點，非交易日曆真實查證",
+    "source_urls": [
+      "https://example.invalid/sample-source"
+    ]
+  },
+  "gates": [
+    {
+      "number": 1,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 2,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 3,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 4,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 5,
+      "signal": "green",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 6,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 7,
+      "signal": "yellow",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    },
+    {
+      "number": 8,
+      "signal": "green",
+      "reason": "合成已核對條件，非真實行情",
+      "source_urls": [
+        "https://example.invalid/sample-source"
+      ]
+    }
+  ],
+  "conditions": {
+    "upgrade": [
+      "重新核對估值與論點，使第1至3關符合綠燈條件"
+    ],
+    "downgrade": [
+      "若論點失效或近期事件風險升高，重做決策"
+    ],
+    "waiting_for": [],
+    "batches": [
+      {
+        "trigger": "第一批：第2關估值及第6關價格位置重新核對符合條件後評估",
+        "requires_clearance": [
+          "gate_2",
+          "gate_6"
+        ]
+      },
+      {
+        "trigger": "第二批：下一期正式資料支持本次論點後評估",
+        "requires_clearance": [
+          "gate_3"
+        ]
+      }
+    ]
+  },
+  "conclusion": {
+    "action": "staged",
+    "clause": 4,
+    "trigger_codes": [
+      "core_checks_passed_conditional_batches"
+    ],
+    "missing_gates": [],
+    "blocking_direct_entry": [
+      1,
+      2,
+      3
+    ],
+    "first_batch_requirements": []
+  },
+  "sources": [
+    {
+      "url": "https://example.invalid/sample-source",
+      "title": "範例來源（合成，不是真實財報）",
+      "published_at": "2026-07-30",
+      "retrieved_at": "2026-10-08T18:00:00+08:00",
+      "source_type": "financial_statement"
+    }
+  ],
+  "report_markdown": "規則版本 1.7.0\n範例公司（合成資料）：本文為格式範例，非真實行情與研究結論。\n估值位置：合成P/E 20倍，歷史區間15至26倍。\n下一個催化劑：合成法說事件預定2026-11-12。\n最大單一風險：合成現價高於保守模型價90元。\n關鍵缺口：本案例僅為格式示範，外部資料未核實。\n整體投資訊號：🟡；總分：75；暫定：否；信心：高\n決策規則版本 1.9.0\n行動結論：分批；命中條款：4\n\n| 關卡 | 名稱 | 燈號 | 依據 |\n| --- | --- | --- | --- |\n| 1 | 第1關 | 🟡 | 合成證據 |\n| 2 | 第2關 | 🟡 | 合成證據 |\n| 3 | 第3關 | 🟡 | 合成證據 |\n| 4 | 第4關 | 🟡 | 合成證據 |\n| 5 | 第5關 | 🟢 | 合成證據 |\n| 6 | 第6關 | 🟡 | 合成證據 |\n| 7 | 第7關 | 🟡 | 合成證據 |\n| 8 | 第8關 | 🟢 | 合成證據 |\n決策驗證範圍：結論、條款及格式；八關證據仍人工核對。",
+  "report_sha256": "dd6cd3b4fa418c362b5aca645a7dc839ce54a672d71e94273ca8c9508488d083"
+}

@@ -1,0 +1,85 @@
+{
+  "rule_version": "1.7.0",
+  "scope": "offline synthetic manual forward-testing; not automatically validated",
+  "common_assumptions": "除A外均假設現價與最近交易時點已核對、無口徑／一次性問題，給定關卡直接沿用；F–H沿用此前提。無此時效前提須先等待。",
+  "cases": [
+    {
+      "id": "A",
+      "input": "報價時間不明；研究與第1–7關均資料不足；尚無可核對論點、價格及期限。",
+      "gates": {
+        "8": "unknown"
+      },
+      "action": "wait",
+      "clause": 2
+    },
+    {
+      "id": "B",
+      "input": "第1–6關綠；基期獲利正，P=0%、G=0%、無一次性；可核對論點與兩次季度財報檢核期限，價格型缺資料。",
+      "gates": {
+        "7": "yellow",
+        "8": "yellow"
+      },
+      "action": "staged",
+      "clause": 4
+    },
+    {
+      "id": "C",
+      "input": "第1黃、第3–6綠、第8綠；倍數第90百分位；基期獲利正，G=0%、P=10%、無一次性。",
+      "gates": {
+        "2": "red",
+        "7": "red"
+      },
+      "action": "wait",
+      "clause": 2
+    },
+    {
+      "id": "D",
+      "input": "第1–7均黃；足夠資料確認論點只依賴不可驗證敘事，仍無法定義論點型失效條件。",
+      "gates": {
+        "8": "red"
+      },
+      "action": "abandon",
+      "clause": 1
+    },
+    {
+      "id": "E",
+      "input": "第1、3、4、5、8綠；倍數恰中位、保守下行15%；指標完整、收盤>SMA60、RSI=65、正乖離8%、MACD>訊號；基期正，G=10%、P=20%、無一次性。",
+      "gates": {
+        "2": "yellow",
+        "6": "yellow",
+        "7": "yellow"
+      },
+      "action": "staged",
+      "clause": 4
+    },
+    {
+      "id": "F",
+      "input": "第1、2、3、5、6、8綠；市場四項僅得三項且一項不利；同口徑基期正，G=-20%、P=-30%。",
+      "gates": {
+        "4": "unknown",
+        "7": "yellow"
+      },
+      "action": "staged",
+      "clause": 4
+    },
+    {
+      "id": "G",
+      "input": "同F但市場四項齊備且零不利；G=-20%、P=0%。",
+      "gates": {
+        "4": "green",
+        "7": "red"
+      },
+      "action": "staged",
+      "clause": 4
+    },
+    {
+      "id": "H",
+      "input": "債券ETF，第1、3–8綠；信用／天期、歷史殖利率與利率情境敏感度已核對、樣本達門檻；殖利率第90百分位且高於中位、情境下行15%。",
+      "gates": {
+        "2": "green"
+      },
+      "action": "enter",
+      "clause": 3
+    }
+  ]
+}

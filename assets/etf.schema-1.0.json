@@ -1,0 +1,1652 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ETF mechanical snapshot etf-1.1",
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_or_estimate": {
+          "enum": [
+            "actual",
+            "estimate",
+            null
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        },
+        "value_status": {
+          "enum": [
+            "reported",
+            "calculated",
+            "estimated",
+            "missing",
+            "not_applicable"
+          ]
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inputs": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "currency",
+        "period",
+        "as_of",
+        "actual_or_estimate",
+        "basis",
+        "source_url",
+        "retrieved_at",
+        "source_type",
+        "value_status",
+        "formula",
+        "inputs"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "enum": [
+            0,
+            1,
+            2,
+            null
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "check",
+        "score",
+        "reason",
+        "period",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "dimension": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/item"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "coverage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "total_items": {
+          "const": 3
+        },
+        "raw_score": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display_score": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red"
+          ]
+        }
+      },
+      "required": [
+        "items",
+        "weight",
+        "coverage",
+        "total_items",
+        "raw_score",
+        "display_score",
+        "signal"
+      ],
+      "additionalProperties": false
+    },
+    "indicator": {
+      "type": "object",
+      "properties": {
+        "last_close": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sma20": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sma60": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sma120": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rsi14": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "macd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "macd_signal": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relative_volume20": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "last_close",
+        "sma20",
+        "sma60",
+        "sma120",
+        "rsi14",
+        "macd",
+        "macd_signal",
+        "relative_volume20"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "limited",
+            "fail"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "check",
+        "status",
+        "reason",
+        "metrics"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_type": {
+          "enum": [
+            "quote",
+            "company_announcement",
+            "financial_statement",
+            "monthly_revenue",
+            "preliminary_results",
+            "company_guidance",
+            "external_estimate",
+            "analysis_assumption",
+            "other"
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "title",
+        "published_at",
+        "retrieved_at",
+        "source_type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "security": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exchange": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instrument": {
+          "const": "etf"
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "symbol",
+        "exchange",
+        "instrument",
+        "currency"
+      ],
+      "additionalProperties": false
+    },
+    "analysis_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "data_cutoff_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "analysis_scope": {
+      "enum": [
+        "current",
+        "historical"
+      ]
+    },
+    "quote_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "quote_status": {
+      "enum": [
+        "close",
+        "intraday",
+        "delayed",
+        "unknown"
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "web": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "documents": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "python": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        },
+        "storage": {
+          "enum": [
+            "available",
+            "unavailable",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "resources",
+        "web",
+        "documents",
+        "python",
+        "storage"
+      ],
+      "additionalProperties": false
+    },
+    "major_risk": {
+      "type": "object",
+      "properties": {
+        "confirmed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "confirmed",
+        "reason",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "technical": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "computed",
+            "not_run",
+            "insufficient_data"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "indicators": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/indicator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red"
+          ]
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          }
+        },
+        "observation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "adjustment": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "as_of",
+        "indicators",
+        "signal",
+        "source_urls",
+        "observation_count",
+        "adjustment"
+      ],
+      "additionalProperties": false
+    },
+    "overall": {
+      "type": "object",
+      "properties": {
+        "signal": {
+          "enum": [
+            "unknown",
+            "green",
+            "yellow",
+            "red",
+            "major_risk"
+          ]
+        },
+        "score": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_score": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provisional": {
+          "type": "boolean",
+          "description": "model 1.1 only: true when the signal is a provisional (暫定) judgment below full eligibility"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "enum": [
+                "high",
+                "medium",
+                "low"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "model 1.1 only: high=full eligibility, medium/low=provisional, null=no signal"
+        },
+        "concentration_cap": {
+          "enum": [
+            "none",
+            "yellow",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "signal",
+        "score",
+        "raw_score",
+        "reason",
+        "provisional",
+        "confidence",
+        "concentration_cap"
+      ],
+      "additionalProperties": false
+    },
+    "report_markdown": {
+      "type": "string",
+      "minLength": 1
+    },
+    "report_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "minItems": 0
+    },
+    "data_gaps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "thesis": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "invalidation_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "model_version": {
+      "const": "etf-1.1"
+    },
+    "skill_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rule_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validated": {
+      "type": "boolean"
+    },
+    "validation_scope": {
+      "const": "etf_structure_arithmetic_scores"
+    },
+    "subtype": {
+      "enum": [
+        "市值型",
+        "高股息／因子型",
+        "產業／主題型",
+        "主動式",
+        "債券型",
+        "跨境股票型"
+      ]
+    },
+    "holdings_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fund": {
+      "type": "object",
+      "properties": {
+        "issuer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index_or_strategy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "underlying_asset": {
+          "enum": [
+            "equity",
+            "bond"
+          ]
+        },
+        "replication": {
+          "enum": [
+            "physical",
+            "sampling",
+            "synthetic"
+          ]
+        },
+        "leverage_ratio": {
+          "const": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        },
+        "inception_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "issuer",
+        "index_or_strategy",
+        "underlying_asset",
+        "replication",
+        "leverage_ratio",
+        "reason",
+        "source_urls",
+        "inception_date"
+      ],
+      "additionalProperties": false
+    },
+    "eligibility": {
+      "type": "object",
+      "properties": {
+        "quote_verified": {
+          "enum": [
+            "pass",
+            "limited",
+            "fail"
+          ]
+        },
+        "quote_is_current": {
+          "enum": [
+            "pass",
+            "limited",
+            "fail"
+          ]
+        },
+        "holdings_financials_verified": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "valuation_supported": {
+          "enum": [
+            "pass",
+            "limited",
+            "fail"
+          ]
+        }
+      },
+      "required": [
+        "quote_verified",
+        "quote_is_current",
+        "holdings_financials_verified",
+        "valuation_supported"
+      ],
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/validation"
+      },
+      "minItems": 4
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "$ref": "#/$defs/metric"
+        },
+        "nav": {
+          "$ref": "#/$defs/metric"
+        },
+        "premium_discount_pct": {
+          "$ref": "#/$defs/metric"
+        },
+        "distribution_ttm_per_unit": {
+          "$ref": "#/$defs/metric"
+        },
+        "yield_ttm_pct": {
+          "$ref": "#/$defs/metric"
+        },
+        "weighted_pe": {
+          "$ref": "#/$defs/metric"
+        },
+        "tracking_difference_pct": {
+          "$ref": "#/$defs/metric"
+        },
+        "premium_abs_mean20_pct": {
+          "$ref": "#/$defs/metric"
+        },
+        "premium_abs_max20_pct": {
+          "$ref": "#/$defs/metric"
+        }
+      },
+      "required": [
+        "price",
+        "nav",
+        "premium_discount_pct",
+        "distribution_ttm_per_unit",
+        "yield_ttm_pct",
+        "weighted_pe"
+      ],
+      "additionalProperties": {
+        "$ref": "#/$defs/metric"
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "holdings_quality": {
+          "type": "object",
+          "properties": {
+            "weight_pct": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "enum": [
+                "reported",
+                "calculated",
+                "missing",
+                "not_applicable"
+              ]
+            },
+            "contributors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "weight_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "data_available": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "weight_pct",
+                  "data_available"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "weight_pct",
+            "method",
+            "contributors",
+            "reason",
+            "period",
+            "source_urls"
+          ],
+          "additionalProperties": false
+        },
+        "band_position": {
+          "type": "object",
+          "properties": {
+            "weight_pct": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "enum": [
+                "reported",
+                "calculated",
+                "missing",
+                "not_applicable"
+              ]
+            },
+            "contributors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "weight_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "data_available": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "weight_pct",
+                  "data_available"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "weight_pct",
+            "method",
+            "contributors",
+            "reason",
+            "period",
+            "source_urls"
+          ],
+          "additionalProperties": false
+        },
+        "relative_valuation": {
+          "type": "object",
+          "properties": {
+            "weight_pct": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "enum": [
+                "reported",
+                "calculated",
+                "missing",
+                "not_applicable"
+              ]
+            },
+            "contributors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "weight_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "data_available": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "weight_pct",
+                  "data_available"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "weight_pct",
+            "method",
+            "contributors",
+            "reason",
+            "period",
+            "source_urls"
+          ],
+          "additionalProperties": false
+        },
+        "earnings_support": {
+          "type": "object",
+          "properties": {
+            "weight_pct": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "method": {
+              "enum": [
+                "reported",
+                "calculated",
+                "missing",
+                "not_applicable"
+              ]
+            },
+            "contributors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "weight_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "data_available": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "weight_pct",
+                  "data_available"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "period": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_urls": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "weight_pct",
+            "method",
+            "contributors",
+            "reason",
+            "period",
+            "source_urls"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "holdings_quality",
+        "band_position",
+        "relative_valuation",
+        "earnings_support"
+      ],
+      "additionalProperties": false
+    },
+    "concentration": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": [
+            "reported",
+            "calculated",
+            "missing"
+          ]
+        },
+        "max_weight_pct": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "top10_weight_pct": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "holdings_complete": {
+          "type": "boolean"
+        },
+        "holdings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "weight_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "id",
+              "weight_pct"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "method",
+        "max_weight_pct",
+        "top10_weight_pct",
+        "holdings_complete",
+        "holdings",
+        "as_of",
+        "reason",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "valuation_history": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": [
+            "monthly_series",
+            "published",
+            "missing"
+          ]
+        },
+        "observations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "years": {
+          "type": "number",
+          "minimum": 0
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "method",
+        "observations",
+        "years",
+        "reason",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "earnings_support_inputs": {
+      "type": "object",
+      "properties": {
+        "basis": {
+          "enum": [
+            "comparable",
+            "unconfirmed",
+            "bond_manual"
+          ]
+        },
+        "previous_earnings": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_earnings": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nav_return_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "low_base_or_one_off": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(https?://[^\\s]+|attachment:[^\\s]+)$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "basis",
+        "previous_earnings",
+        "current_earnings",
+        "nav_return_pct",
+        "low_base_or_one_off",
+        "reason",
+        "period",
+        "source_urls"
+      ],
+      "additionalProperties": false
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "instrument": {
+          "$ref": "#/$defs/dimension"
+        },
+        "tradability": {
+          "$ref": "#/$defs/dimension"
+        },
+        "portfolio": {
+          "$ref": "#/$defs/dimension"
+        },
+        "valuation": {
+          "$ref": "#/$defs/dimension"
+        },
+        "risk": {
+          "$ref": "#/$defs/dimension"
+        }
+      },
+      "required": [
+        "instrument",
+        "tradability",
+        "portfolio",
+        "valuation",
+        "risk"
+      ],
+      "additionalProperties": false
+    },
+    "sensitivity": {
+      "type": "object",
+      "properties": {
+        "checked": {
+          "type": "boolean"
+        },
+        "fragile": {
+          "type": "boolean"
+        },
+        "confidence_cap": {
+          "enum": [
+            "medium",
+            null
+          ]
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimension": {
+                "enum": [
+                  "instrument",
+                  "tradability",
+                  "portfolio",
+                  "valuation",
+                  "risk"
+                ]
+              },
+              "check": {
+                "type": "string",
+                "minLength": 1
+              },
+              "from_score": {
+                "enum": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "to_score": {
+                "enum": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "signal": {
+                "enum": [
+                  "unknown",
+                  "green",
+                  "yellow",
+                  "red",
+                  "major_risk"
+                ]
+              },
+              "changed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "dimension",
+              "check",
+              "from_score",
+              "to_score",
+              "signal",
+              "changed"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "checked",
+        "fragile",
+        "confidence_cap",
+        "cases"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "security",
+    "analysis_at",
+    "data_cutoff_at",
+    "analysis_scope",
+    "quote_at",
+    "quote_status",
+    "capabilities",
+    "major_risk",
+    "technical",
+    "overall",
+    "report_markdown",
+    "report_sha256",
+    "sources",
+    "data_gaps",
+    "thesis",
+    "invalidation_conditions",
+    "schema_version",
+    "model_version",
+    "skill_version",
+    "rule_version",
+    "validator_version",
+    "validated",
+    "validation_scope",
+    "subtype",
+    "holdings_at",
+    "fund",
+    "eligibility",
+    "validation",
+    "metrics",
+    "coverage",
+    "concentration",
+    "valuation_history",
+    "earnings_support_inputs",
+    "scores",
+    "sensitivity"
+  ],
+  "additionalProperties": false
+}

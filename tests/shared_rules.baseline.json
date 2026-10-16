@@ -1,0 +1,52 @@
+{
+  "scope": "golden derivations captured before shared-rule refactoring; synthetic records only",
+  "cases": [
+    {
+      "input": "tests/snapshot.rule-1.7.0.json",
+      "input_sha256": "dfc7a19acc11bee8ebb344be74360f9203c72282f9508f34004bafc1dea3cbab",
+      "derived_sha256": "f331474680c19ca16900a4a029add415578c9c195c4e31930de7b82f9616efb1",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.model-1.2.json",
+      "input_sha256": "d9faa19b48e4bece1d30122db7f444223dc979845f862ed0d60208f568c79b7c",
+      "derived_sha256": "7c309973441f3ecd4137422f81c70964ec37f469515abdf1cad95b9878e33e76",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.rule-1.5.0.json",
+      "input_sha256": "237bef2d63662b2b5090762cc87e78be0e822c538dca9e59dcf0e4027501f4dc",
+      "derived_sha256": "315e8614368b6426fe3705664ac4aa7c03be0b5244c92276c4e545a69f764823",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.rule-1.6.0.json",
+      "input_sha256": "8b939b98b02a5b9937f097990be1d27be8409af237bb47b3641ab7449e93326f",
+      "derived_sha256": "1e197492dbfb4647b8383af3a3591b017632cbe3e560e979884b6c6e06fdcfa0",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.rule-1.8.0.json",
+      "input_sha256": "2a2c61511c5692607c98eab174b336cdbf7618572dcf751777c1aabb6e3835d8",
+      "derived_sha256": "1fba0dfaae71502c785a6f3bc399ef6eaf6ae3a89400cd1b3aadbf6b350d0a22",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.rule-1.9.0.json",
+      "input_sha256": "1d2510200b3656803f988678d9b96eb62a5fb65e84cd6c0ebe7cb6374fafb2d0",
+      "derived_sha256": "d7bd96626485df7bc5b2cab315e49a64f554d652b7d3f31614249154c7d12ab3",
+      "expected_signal": "yellow",
+      "expected_score": 75
+    },
+    {
+      "input": "tests/snapshot.rule-1.12.0.json",
+      "input_sha256": "5b71ccf7f92d2443c0a46d017e79f22114b2bf58de7494a86c659f9adaa91b0a",
+      "derived_sha256": "2dc1a73cca5564a919c74143264dc5bfc61529e2b1b67ac3a8a781dc219407b5"
+    }
+  ]
+}

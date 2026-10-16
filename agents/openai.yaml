@@ -1,0 +1,13 @@
+interface:
+  display_name: 股票與ETF投資分析儀表板
+  short_description: 以可追溯資料分析台美個股與ETF，提供研究燈號、風險、決策檢核及選用離線互動報告
+  default_prompt: 請使用 $analyze-stocks 分析台積電（2330），提供快速版儀表板並比較可取得的前次分析。
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

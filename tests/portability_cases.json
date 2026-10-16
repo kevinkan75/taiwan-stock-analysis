@@ -1,0 +1,1857 @@
+{
+  "notice": "ALL DATA SYNTHETIC. Not actual stock analysis. Expected answers are for the checker only, never give them to evaluation agents.",
+  "template": {
+    "schema_version": "1.2",
+    "model_version": "1.0",
+    "security": {
+      "name": "合成測試公司",
+      "symbol": "TEST",
+      "exchange": "TWSE",
+      "instrument": "ordinary",
+      "currency": "TWD"
+    },
+    "analysis_at": "2026-10-08T18:00:00+08:00",
+    "data_cutoff_at": "2026-10-08T13:30:00+08:00",
+    "analysis_scope": "current",
+    "quote_at": "2026-10-08T13:30:00+08:00",
+    "quote_status": "close",
+    "financial_period_end": "2026-06-30",
+    "mode": "quick",
+    "horizon": "1–3年",
+    "capabilities": {
+      "resources": "available",
+      "web": "available",
+      "documents": "available",
+      "python": "available",
+      "storage": "available"
+    },
+    "eligibility": {
+      "quote_verified": true,
+      "quote_is_current": true,
+      "financials_verified": true,
+      "valuation_supported": true,
+      "reasons": {
+        "quote_verified": "合成案例已固定此條件；不代表已核對真實市場",
+        "quote_is_current": "合成案例已固定此條件；不代表已核對真實市場",
+        "financials_verified": "合成案例已固定此條件；不代表已核對真實市場",
+        "valuation_supported": "合成案例已固定此條件；不代表已核對真實市場"
+      }
+    },
+    "major_risk": {
+      "confirmed": false,
+      "reason": "合成案例未設定重大風險",
+      "source_urls": []
+    },
+    "metrics": {
+      "price": {
+        "value": 100,
+        "unit": "TWD/share",
+        "currency": "TWD",
+        "period": "2026-10-08 synthetic close",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "quote",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "market_cap": {
+        "value": 100000000,
+        "unit": "TWD",
+        "currency": "TWD",
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "eps_ttm": {
+        "value": 5,
+        "unit": "TWD/share",
+        "currency": "TWD",
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "pe_ttm": {
+        "value": 20,
+        "unit": "multiple",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "calculated",
+        "formula": "price / eps_ttm",
+        "inputs": {
+          "price": 100,
+          "eps_ttm": 5
+        }
+      },
+      "revenue_growth_q2": {
+        "value": 20,
+        "unit": "percent",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "eps_growth_q2": {
+        "value": 40,
+        "unit": "percent",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "roe_ttm": {
+        "value": 18,
+        "unit": "percent",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "gross_margin_q2": {
+        "value": 30,
+        "unit": "percent",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "fcf_ttm": {
+        "value": 10000000,
+        "unit": "TWD",
+        "currency": "TWD",
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      },
+      "cash_yield": {
+        "value": 2,
+        "unit": "percent",
+        "currency": null,
+        "period": "2026 synthetic matching period",
+        "as_of": "2026-10-08",
+        "actual_or_estimate": "actual",
+        "basis": "SYNTHETIC test value, not a market quote",
+        "source_url": [
+          "https://fixture.invalid/synthetic-source"
+        ],
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement",
+        "value_status": "reported",
+        "formula": null,
+        "inputs": null
+      }
+    },
+    "valuation": {
+      "method": "synthetic supported model",
+      "horizon": "6–12個月",
+      "assumption_sources": [
+        "https://fixture.invalid/synthetic-source"
+      ],
+      "scenarios": [
+        {
+          "label": "base",
+          "model_price": 130,
+          "assumptions": {
+            "synthetic": true
+          },
+          "formula": "fixed synthetic model output",
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ]
+        },
+        {
+          "label": "conservative",
+          "model_price": 90,
+          "assumptions": {
+            "synthetic": true
+          },
+          "formula": "fixed synthetic model output",
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ]
+        }
+      ],
+      "sensitivity_only": []
+    },
+    "technical": {
+      "status": "not_run",
+      "reason": "未執行",
+      "as_of": null,
+      "indicators": null,
+      "signal": "unknown",
+      "source_urls": [],
+      "observation_count": 0,
+      "adjustment": null
+    },
+    "validation": [
+      {
+        "check": "quote_verified",
+        "status": "pass",
+        "reason": "合成案例固定條件",
+        "metrics": [
+          "price"
+        ],
+        "source_urls": [
+          "https://fixture.invalid/synthetic-source"
+        ]
+      },
+      {
+        "check": "quote_is_current",
+        "status": "pass",
+        "reason": "合成案例固定條件",
+        "metrics": [
+          "price"
+        ],
+        "source_urls": [
+          "https://fixture.invalid/synthetic-source"
+        ]
+      },
+      {
+        "check": "financials_verified",
+        "status": "pass",
+        "reason": "合成案例固定條件",
+        "metrics": [],
+        "source_urls": [
+          "https://fixture.invalid/synthetic-source"
+        ]
+      },
+      {
+        "check": "valuation_supported",
+        "status": "pass",
+        "reason": "合成案例固定條件",
+        "metrics": [],
+        "source_urls": [
+          "https://fixture.invalid/synthetic-source"
+        ]
+      }
+    ],
+    "scores": {
+      "fundamentals": {
+        "items": [
+          {
+            "check": "earnings_quality",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "balance_sheet",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "capital_efficiency",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          }
+        ],
+        "weight": 0,
+        "coverage": 0,
+        "total_items": 3,
+        "raw_score": null,
+        "display_score": null,
+        "signal": "unknown"
+      },
+      "growth": {
+        "items": [
+          {
+            "check": "realized_revenue",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "realized_eps",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "future_drivers",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          }
+        ],
+        "weight": 0,
+        "coverage": 0,
+        "total_items": 3,
+        "raw_score": null,
+        "display_score": null,
+        "signal": "unknown"
+      },
+      "valuation": {
+        "items": [
+          {
+            "check": "model_upside",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "comparable_valuation",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "scenario_resilience",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          }
+        ],
+        "weight": 0,
+        "coverage": 0,
+        "total_items": 3,
+        "raw_score": null,
+        "display_score": null,
+        "signal": "unknown"
+      },
+      "industry": {
+        "items": [
+          {
+            "check": "end_demand",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "competitive_position",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "supply_policy",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          }
+        ],
+        "weight": 0,
+        "coverage": 0,
+        "total_items": 3,
+        "raw_score": null,
+        "display_score": null,
+        "signal": "unknown"
+      },
+      "risk": {
+        "items": [
+          {
+            "check": "operations_concentration",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "regulatory_governance",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          },
+          {
+            "check": "financial_event_buffer",
+            "score": 2,
+            "reason": "合成固定案例；非真實投資證據",
+            "period": "2026 Q2 (synthetic)",
+            "source_urls": [
+              "https://fixture.invalid/synthetic-source"
+            ]
+          }
+        ],
+        "weight": 0,
+        "coverage": 0,
+        "total_items": 3,
+        "raw_score": null,
+        "display_score": null,
+        "signal": "unknown"
+      }
+    },
+    "overall": {
+      "signal": "unknown",
+      "score": null,
+      "raw_score": null,
+      "reason": "待程式推導"
+    },
+    "thesis": [
+      "synthetic only"
+    ],
+    "invalidation_conditions": [
+      "synthetic only"
+    ],
+    "events": [],
+    "risks": [],
+    "sources": [
+      {
+        "url": "https://fixture.invalid/synthetic-source",
+        "title": "合成固定測試資料（不是真實財報）",
+        "published_at": "2026-07-30",
+        "retrieved_at": "2026-10-08T18:00:00+08:00",
+        "source_type": "financial_statement"
+      }
+    ],
+    "data_gaps": [],
+    "previous_report_reference": null
+  },
+  "cases": [
+    {
+      "id": "complete",
+      "prompt": "依附合成資料完成快速版並輸出快照，不查外部資料。",
+      "overrides": {},
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "tsmc_route",
+      "prompt": "分析2330，使用本案例合成資料並清楚識別市場。",
+      "overrides": {
+        "security": {
+          "name": "台積電情境（合成資料）",
+          "symbol": "2330"
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "sharp_low_base",
+      "prompt": "分析尖點，EPS成長含低基期，使用本案例合成資料。",
+      "overrides": {
+        "security": {
+          "name": "尖點情境（合成資料）",
+          "symbol": "8021"
+        },
+        "scores": {
+          "growth": {
+            "items": [
+              {
+                "check": "realized_revenue",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "realized_eps",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "future_drivers",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "delta_valuation_gap",
+      "prompt": "分析台達電，僅有已實現估值與無校準的倍數敏感度，不新增假設或來源。",
+      "overrides": {
+        "security": {
+          "name": "台達電情境（合成資料）",
+          "symbol": "2308"
+        },
+        "scores": {
+          "fundamentals": {
+            "items": [
+              {
+                "check": "earnings_quality",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "balance_sheet",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "capital_efficiency",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "growth": {
+            "items": [
+              {
+                "check": "realized_revenue",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "realized_eps",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "future_drivers",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "valuation": {
+            "items": [
+              {
+                "check": "model_upside",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              },
+              {
+                "check": "comparable_valuation",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              },
+              {
+                "check": "scenario_resilience",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "industry": {
+            "items": [
+              {
+                "check": "end_demand",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "competitive_position",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "supply_policy",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "risk": {
+            "items": [
+              {
+                "check": "operations_concentration",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "regulatory_governance",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              },
+              {
+                "check": "financial_event_buffer",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        },
+        "eligibility": {
+          "valuation_supported": false
+        },
+        "valuation": {
+          "method": null,
+          "horizon": null,
+          "assumption_sources": [],
+          "scenarios": [],
+          "sensitivity_only": [
+            {
+              "assumed_pe": 30,
+              "required_eps": 3.3333333333333335,
+              "not_fair_value": true
+            }
+          ]
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "unknown",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "stale_current",
+      "prompt": "用過期報價分析目前條件，資料截至附檔。",
+      "overrides": {
+        "eligibility": {
+          "quote_is_current": false
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "unknown",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "historical",
+      "prompt": "依附檔截止日期進行歷史分析。",
+      "overrides": {
+        "analysis_scope": "historical",
+        "eligibility": {
+          "quote_is_current": false
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "coverage_11",
+      "prompt": "完成研究，但四面向各缺一項。",
+      "overrides": {
+        "scores": {
+          "fundamentals": {
+            "items": [
+              {
+                "check": "earnings_quality",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "balance_sheet",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "capital_efficiency",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "growth": {
+            "items": [
+              {
+                "check": "realized_revenue",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "realized_eps",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "future_drivers",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "valuation": {
+            "items": [
+              {
+                "check": "model_upside",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "comparable_valuation",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "scenario_resilience",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "industry": {
+            "items": [
+              {
+                "check": "end_demand",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "competitive_position",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "supply_policy",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "unknown",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "coverage_12",
+      "prompt": "完成研究，三面向各缺一項。",
+      "overrides": {
+        "scores": {
+          "fundamentals": {
+            "items": [
+              {
+                "check": "earnings_quality",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "balance_sheet",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "capital_efficiency",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "growth": {
+            "items": [
+              {
+                "check": "realized_revenue",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "realized_eps",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "future_drivers",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "industry": {
+            "items": [
+              {
+                "check": "end_demand",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "competitive_position",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "supply_policy",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "major_risk",
+      "prompt": "完成附檔研究，公告中有已確認直接威脅營運的重大事件。",
+      "overrides": {
+        "major_risk": {
+          "confirmed": true,
+          "reason": "合成案例的已確認違約事件",
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ]
+        },
+        "eligibility": {
+          "valuation_supported": false
+        },
+        "scores": {
+          "valuation": {
+            "items": [
+              {
+                "check": "model_upside",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              },
+              {
+                "check": "comparable_valuation",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              },
+              {
+                "check": "scenario_resilience",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "major_risk",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "risk_veto",
+      "prompt": "評估財務風險已有明確不利證據的案例。",
+      "overrides": {
+        "scores": {
+          "risk": {
+            "items": [
+              {
+                "check": "operations_concentration",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "regulatory_governance",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "financial_event_buffer",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "red",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "valuation_veto",
+      "prompt": "依附有支持的模型評估現價。",
+      "overrides": {
+        "scores": {
+          "valuation": {
+            "items": [
+              {
+                "check": "model_upside",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "comparable_valuation",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "scenario_resilience",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        },
+        "valuation": {
+          "scenarios": [
+            {
+              "label": "base",
+              "model_price": 70,
+              "assumptions": {
+                "synthetic": true
+              },
+              "formula": "fixed synthetic model output",
+              "source_urls": [
+                "https://fixture.invalid/synthetic-source"
+              ]
+            },
+            {
+              "label": "conservative",
+              "model_price": 50,
+              "assumptions": {
+                "synthetic": true
+              },
+              "formula": "fixed synthetic model output",
+              "source_urls": [
+                "https://fixture.invalid/synthetic-source"
+              ]
+            }
+          ]
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "red",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "technical_insufficient",
+      "prompt": "僅有10筆資料，請呈現技術分析狀態。",
+      "overrides": {
+        "technical": {
+          "status": "insufficient_data",
+          "reason": "僅10筆；缺完整指標",
+          "observation_count": 10,
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ]
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "unknown"
+      }
+    },
+    {
+      "id": "technical_green",
+      "prompt": "依已計算指標顯示技術燈號。",
+      "overrides": {
+        "technical": {
+          "status": "computed",
+          "reason": "合成已計算指標",
+          "as_of": "2026-10-08",
+          "indicators": {
+            "last_close": 100,
+            "sma20": 95,
+            "sma60": 90,
+            "sma120": 85,
+            "rsi14": 60,
+            "macd": 2,
+            "macd_signal": 1,
+            "relative_volume20": 1.2
+          },
+          "signal": "unknown",
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ],
+          "observation_count": 250,
+          "adjustment": "split adjusted, no dividend adjustment (synthetic)"
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "green"
+      }
+    },
+    {
+      "id": "technical_rsi_extreme",
+      "prompt": "依已計算但RSI過熱的指標顯示技術狀態。",
+      "overrides": {
+        "technical": {
+          "status": "computed",
+          "reason": "合成已計算指標",
+          "as_of": "2026-10-08",
+          "indicators": {
+            "last_close": 100,
+            "sma20": 95,
+            "sma60": 90,
+            "sma120": 85,
+            "rsi14": 80,
+            "macd": 2,
+            "macd_signal": 1,
+            "relative_volume20": 1.2
+          },
+          "signal": "unknown",
+          "source_urls": [
+            "https://fixture.invalid/synthetic-source"
+          ],
+          "observation_count": 250,
+          "adjustment": "split adjusted, no dividend adjustment (synthetic)"
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "green",
+        "technical_signal": "yellow"
+      }
+    },
+    {
+      "id": "wrong_adr_currency",
+      "prompt": "核對TSM美元ADR快照，來源股價仍以新臺幣標記。",
+      "overrides": {
+        "security": {
+          "name": "TSM情境（合成資料）",
+          "symbol": "TSM",
+          "exchange": "NYSE",
+          "instrument": "adr",
+          "currency": "USD"
+        }
+      },
+      "expected": {
+        "invalid": true,
+        "overall_signal": null,
+        "technical_signal": null
+      }
+    },
+    {
+      "id": "forged_sensitive_model",
+      "prompt": "核對僅敏感度卻宣稱估值可支持的快照。",
+      "overrides": {
+        "valuation": {
+          "method": null,
+          "horizon": null,
+          "assumption_sources": [],
+          "scenarios": [],
+          "sensitivity_only": [
+            {
+              "assumed_pe": 30
+            }
+          ]
+        }
+      },
+      "expected": {
+        "invalid": true,
+        "overall_signal": null,
+        "technical_signal": null
+      }
+    },
+    {
+      "id": "fake_technical_computed",
+      "prompt": "核對聲稱已計算卻沒有技術指標的快照。",
+      "overrides": {
+        "technical": {
+          "status": "computed"
+        }
+      },
+      "expected": {
+        "invalid": true,
+        "overall_signal": null,
+        "technical_signal": null
+      }
+    },
+    {
+      "id": "unsupported_major_risk",
+      "prompt": "核對聲稱有重大風險但無公告來源的快照。",
+      "overrides": {
+        "major_risk": {
+          "confirmed": true,
+          "reason": "沒有來源",
+          "source_urls": []
+        }
+      },
+      "expected": {
+        "invalid": true,
+        "overall_signal": null,
+        "technical_signal": null
+      }
+    },
+    {
+      "id": "rounding_boundary",
+      "prompt": "依原始未四捨五入分數判定燈號。",
+      "overrides": {
+        "scores": {
+          "fundamentals": {
+            "items": [
+              {
+                "check": "earnings_quality",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "balance_sheet",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "capital_efficiency",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "growth": {
+            "items": [
+              {
+                "check": "realized_revenue",
+                "score": 0,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "realized_eps",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "future_drivers",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "valuation": {
+            "items": [
+              {
+                "check": "model_upside",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "comparable_valuation",
+                "score": 1,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "scenario_resilience",
+                "score": null,
+                "reason": "此項缺少證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": []
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "industry": {
+            "items": [
+              {
+                "check": "end_demand",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "competitive_position",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "supply_policy",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          },
+          "risk": {
+            "items": [
+              {
+                "check": "operations_concentration",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "regulatory_governance",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              },
+              {
+                "check": "financial_event_buffer",
+                "score": 2,
+                "reason": "合成固定案例；非真實投資證據",
+                "period": "2026 Q2 (synthetic)",
+                "source_urls": [
+                  "https://fixture.invalid/synthetic-source"
+                ]
+              }
+            ],
+            "weight": 0,
+            "coverage": 0,
+            "total_items": 3,
+            "raw_score": null,
+            "display_score": null,
+            "signal": "unknown"
+          }
+        }
+      },
+      "expected": {
+        "invalid": false,
+        "overall_signal": "yellow",
+        "technical_signal": "unknown"
+      }
+    }
+  ],
+  "rule_cases_notice": "Rule-level synthetic cases for rule version 1.3.0 (phase 1 text rules). They test the arithmetic of R1/R2/R3/R5/R6/R7/R10 via a reference implementation in check_portability.py; snapshot_guard does not enforce them until phase 2. Expected answers are for the checker only.",
+  "rule_cases": [
+    {
+      "id": "bvps_revaluation",
+      "rule": "R1",
+      "input": {
+        "price": 81.3,
+        "bvps_quarters": [
+          45.85,
+          57.06,
+          61.3,
+          90.21
+        ],
+        "oci_share": 0.3,
+        "holding_ratio": 0.1,
+        "pb_base": 1.3,
+        "pb_conservative": 0.95
+      },
+      "expected": {
+        "triggered": true,
+        "adjusted_bvps": 63.6,
+        "base_price": 82.7,
+        "base_upside_pct": 1.7,
+        "model_upside": 1,
+        "conservative_price": 60.4,
+        "conservative_downside_pct": -25.7,
+        "scenario_resilience": 1,
+        "unadjusted_model_upside": 2
+      }
+    },
+    {
+      "id": "roe_not_comparable",
+      "rule": "R2",
+      "input": {
+        "annual_roe": [
+          17.7,
+          10.1,
+          2.1,
+          -0.4,
+          -2.8
+        ],
+        "ttm_roe_a": 0.8,
+        "ttm_roe_b": 2.5
+      },
+      "expected": {
+        "range_median": 2.1,
+        "triggered_a": true,
+        "triggered_b": false
+      }
+    },
+    {
+      "id": "method_conflict",
+      "rule": "R3",
+      "input": {
+        "price": 100,
+        "pairs": [
+          [
+            120,
+            88
+          ],
+          [
+            101.7,
+            80
+          ],
+          [
+            116,
+            89
+          ]
+        ]
+      },
+      "expected": {
+        "conflict": [
+          true,
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "id": "insufficient_bars",
+      "rule": "R5",
+      "input": {
+        "counts": [
+          235,
+          239,
+          240,
+          241
+        ]
+      },
+      "expected": {
+        "status": [
+          "insufficient_data",
+          "insufficient_data",
+          "computed",
+          "computed"
+        ]
+      }
+    },
+    {
+      "id": "gate4_boundary",
+      "rule": "R7",
+      "input": {
+        "us10y_bp": [
+          20,
+          22.4,
+          22.5,
+          26,
+          27.5,
+          27.6
+        ],
+        "sources_straddle": [
+          24,
+          27
+        ],
+        "threshold_bp": 25,
+        "gate_unfavorable_known": 1
+      },
+      "expected": {
+        "boundary": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "straddle_boundary": true,
+        "gate_with_boundary_unfavorable": "red",
+        "gate_if_neutral": "yellow"
+      }
+    },
+    {
+      "id": "macd_cross_strength",
+      "rule": "R10",
+      "input": {
+        "samples": [
+          {
+            "hist": [
+              -0.1,
+              0.02,
+              0.15,
+              0.22
+            ],
+            "close": 66.8
+          },
+          {
+            "hist": [
+              -0.1,
+              0.03
+            ],
+            "close": 66.8
+          },
+          {
+            "hist": [
+              -0.5,
+              0.01,
+              0.01,
+              0.01
+            ],
+            "close": 100
+          }
+        ]
+      },
+      "expected": [
+        [
+          true,
+          "confirmed"
+        ],
+        [
+          true,
+          "pending"
+        ],
+        [
+          true,
+          "weak"
+        ]
+      ]
+    },
+    {
+      "id": "fragile_conclusion",
+      "rule": "R6",
+      "input": {
+        "items": {
+          "fundamentals": [
+            1,
+            1,
+            1
+          ],
+          "growth": [
+            1,
+            2,
+            1
+          ],
+          "valuation": [
+            1,
+            1,
+            1
+          ],
+          "industry": [
+            2,
+            1,
+            1
+          ],
+          "risk": [
+            1,
+            1,
+            1
+          ]
+        },
+        "reserved": [
+          "valuation.0"
+        ]
+      },
+      "expected": {
+        "base_signal": "yellow",
+        "fragile": true,
+        "flip_item": "valuation.0",
+        "flip_to": 0,
+        "flipped_signal": "red"
+      }
+    }
+  ]
+}

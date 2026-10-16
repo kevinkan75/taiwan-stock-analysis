@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-@@SCRIPT_HASH@@'; style-src 'sha256-@@STYLE_HASH@@'; img-src 'none'; connect-src 'none'; font-src 'none'; base-uri 'none'; form-action 'none'">
+<title>@@TITLE@@</title><style>@@CSS@@</style></head><body>
+<a class="skip" href="#content">跳至研究內容</a>
+<header>@@HEADER@@</header><main id="content">@@STATUSES@@@@WARNINGS@@
+<nav aria-label="研究章節"><div role="tablist" aria-label="研究章節">
+<button id="tab-overview" role="tab" aria-controls="overview" aria-selected="true">概覽</button>
+<button id="tab-financials" role="tab" aria-controls="financials" aria-selected="false">三年財務</button>
+<button id="tab-valuation" role="tab" aria-controls="valuation" aria-selected="false">估值</button>
+<button id="tab-risks" role="tab" aria-controls="risks" aria-selected="false">風險與來源</button>
+</div><button id="print" type="button">列印完整報告</button></nav>
+<noscript><p>JavaScript 未啟用；以下仍完整呈現四章、所有圖表與數值。</p></noscript>
+<section id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0"><h2 class="section-title">概覽</h2>@@OVERVIEW@@</section>
+<section id="financials" role="tabpanel" aria-labelledby="tab-financials" tabindex="0"><h2 class="section-title">三年財務</h2>@@FINANCIALS@@</section>
+<section id="valuation" role="tabpanel" aria-labelledby="tab-valuation" tabindex="0"><h2 class="section-title">估值</h2>@@VALUATION@@</section>
+<section id="risks" role="tabpanel" aria-labelledby="tab-risks" tabindex="0"><h2 class="section-title">風險與來源</h2>@@RISKS@@</section>
+<footer>@@FOOTER@@</footer></main>
+<script id="export-manifest" type="application/json">@@MANIFEST@@</script><script>@@JS@@</script></body></html>

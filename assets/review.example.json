@@ -1,0 +1,1541 @@
+{
+  "snapshot_type": "review",
+  "schema_version": "1.2",
+  "model_version": "review-1.2",
+  "skill_version": "1.14.0",
+  "rule_version": "1.14.0",
+  "validator_version": "1.2.0",
+  "security": {
+    "name": "範例公司（合成資料，非真實標的）",
+    "symbol": "EXAMPLE",
+    "exchange": "TWSE",
+    "instrument": "ordinary",
+    "currency": "TWD"
+  },
+  "analysis_at": "2026-10-08T18:00:00+08:00",
+  "data_cutoff_at": "2026-10-08T13:30:00+08:00",
+  "mode": "research",
+  "research_reference": {
+    "reference": "attachment:snapshot.example.json",
+    "sha256": "fee5517eafb0cd2d337ca8ae405d2cc119a2a56cfce8358dd28f35ee072e389a",
+    "rule_version": "1.14.0",
+    "model_version": "1.3"
+  },
+  "decision_reference": null,
+  "tasks": [
+    {
+      "id": "quote",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：quote",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "financials",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：financials",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "valuation",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：valuation",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：events",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：growth",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    },
+    {
+      "id": "industry",
+      "status": "obtained",
+      "reason": "合成示例：已核對該任務所需期間與口徑，非真實取數",
+      "attempts": [
+        {
+          "stage": "primary",
+          "source_url": "https://example.invalid/sample-source",
+          "at": "2026-10-08T18:00:00+08:00",
+          "request": "合成原文核對：industry",
+          "result": "success",
+          "detail": "合成資料；正式執行全部替換為實際紀錄",
+          "authority_basis": "合成公司官方文件，非真實來源"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://example.invalid/annual-statements",
+      "title": "合成年度財報，非真實資料",
+      "published_at": "2026-03-01",
+      "retrieved_at": "2026-10-08T18:00:00+08:00",
+      "source_type": "financial_statement"
+    }
+  ],
+  "assessment": {
+    "workflow_status": "complete",
+    "evidence_status": "sufficient",
+    "pending_tasks": [],
+    "unresolved_tasks": [],
+    "waiting_reasons": [],
+    "research_confidence": "high",
+    "primary_source_count": 1,
+    "alternative_source_count": 0,
+    "attempt_count": 6,
+    "claim_audit": {
+      "status": "complete",
+      "claims": 34,
+      "unresolved_claims": [],
+      "material_unresolved": [],
+      "thesis_status": "established"
+    },
+    "financial_history": {
+      "status": "complete",
+      "currency": "TWD",
+      "reason": "合成三個完整年度；非真實公司資料或取數結果",
+      "periods": 3,
+      "missing_periods": 0,
+      "rows": [
+        {
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "revenue": 100000000,
+          "gross_margin": 40.0,
+          "operating_margin": 20.0,
+          "net_income_parent": 10000000,
+          "diluted_eps": 1,
+          "roe": 22.22222222222222,
+          "fcf": 12000000,
+          "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除",
+          "revenue_yoy": null,
+          "eps_yoy": null,
+          "revenue_change": null,
+          "eps_change": null,
+          "gross_margin_change_pp": null
+        },
+        {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "revenue": 120000000,
+          "gross_margin": 40.0,
+          "operating_margin": 20.0,
+          "net_income_parent": 12000000,
+          "diluted_eps": 1.2,
+          "roe": 21.818181818181817,
+          "fcf": 14000000,
+          "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除",
+          "revenue_yoy": 19.999999999999996,
+          "eps_yoy": 19.999999999999996,
+          "revenue_change": 20000000,
+          "eps_change": 0.19999999999999996,
+          "gross_margin_change_pp": 0.0
+        },
+        {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "revenue": 144000000,
+          "gross_margin": 40.0,
+          "operating_margin": 20.0,
+          "net_income_parent": 18000000,
+          "diluted_eps": 1.8,
+          "roe": 26.666666666666668,
+          "fcf": 18000000,
+          "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除",
+          "revenue_yoy": 19.999999999999996,
+          "eps_yoy": 50.0,
+          "revenue_change": 24000000,
+          "eps_change": 0.6000000000000001,
+          "gross_margin_change_pp": 0.0
+        }
+      ],
+      "checks": [
+        {
+          "period_end": "2023-12-31",
+          "check": "balance_equation",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1500000.0
+        },
+        {
+          "period_end": "2023-12-31",
+          "check": "cash_end_match",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1000000.0
+        },
+        {
+          "period_end": "2024-12-31",
+          "check": "balance_equation",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1500000.0
+        },
+        {
+          "period_end": "2024-12-31",
+          "check": "cash_end_match",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1000000.0
+        },
+        {
+          "period_end": "2024-12-31",
+          "check": "equity_opening_match",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1000000.0
+        },
+        {
+          "period_end": "2025-12-31",
+          "check": "balance_equation",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1500000.0
+        },
+        {
+          "period_end": "2025-12-31",
+          "check": "cash_end_match",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1000000.0
+        },
+        {
+          "period_end": "2025-12-31",
+          "check": "equity_opening_match",
+          "status": "pass",
+          "difference": 0.0,
+          "tolerance": 1000000.0
+        }
+      ],
+      "missing_inputs": [],
+      "revenue_cagr_two_intervals": 19.999999999999996,
+      "limitation": "原文、合併範圍、歸母口徑、一次性因素與最近已公布年度仍須人工核對；勾稽通過不證明外部數據真實。"
+    }
+  },
+  "evidence_audit": {
+    "status": "complete",
+    "thesis_status": "established",
+    "coverage_note": "合成範例逐項盤點結構化數值與分數，正文主張仍需人工盤點，非真實取數紀錄",
+    "claims": [
+      {
+        "id": "metric_price",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/price/value",
+        "value": 100,
+        "unit": "TWD/share",
+        "period": "2026-10-08 synthetic close",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/price/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026-10-08 synthetic close",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 100,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_market_cap",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/market_cap/value",
+        "value": 100000000,
+        "unit": "TWD",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/market_cap/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 100000000,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_eps_ttm",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/eps_ttm/value",
+        "value": 5,
+        "unit": "TWD/share",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/eps_ttm/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 5,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_pe_ttm",
+        "kind": "calculation",
+        "statement": "合成查核：research:/metrics/pe_ttm/value",
+        "value": 20,
+        "unit": "multiple",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/pe_ttm/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price",
+          "metric_eps_ttm"
+        ],
+        "calculation": {
+          "method": "divide",
+          "inputs": [
+            100,
+            5
+          ],
+          "reason": "同幣別每股價格除以同期EPS"
+        },
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_revenue_growth_q2",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/revenue_growth_q2/value",
+        "value": 20,
+        "unit": "percent",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/revenue_growth_q2/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 20,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_eps_growth_q2",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/eps_growth_q2/value",
+        "value": 40,
+        "unit": "percent",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/eps_growth_q2/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 40,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_roe_ttm",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/roe_ttm/value",
+        "value": 18,
+        "unit": "percent",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/roe_ttm/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 18,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_gross_margin_q2",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/gross_margin_q2/value",
+        "value": 30,
+        "unit": "percent",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/gross_margin_q2/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 30,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "metric_fcf_ttm",
+        "kind": "fact",
+        "statement": "合成查核：research:/metrics/fcf_ttm/value",
+        "value": 10000000,
+        "unit": "TWD",
+        "period": "2026 synthetic matching period",
+        "basis": "範例數值，非真實行情；寫口徑與來源限制",
+        "targets": [
+          "research:/metrics/fcf_ttm/value"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026 synthetic matching period",
+            "basis": "範例數值，非真實行情；寫口徑與來源限制",
+            "value": 10000000,
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_fundamentals0",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/fundamentals/items/0/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/fundamentals/items/0/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_fundamentals1",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/fundamentals/items/1/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/fundamentals/items/1/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_fundamentals2",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/fundamentals/items/2/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/fundamentals/items/2/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_growth0",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/growth/items/0/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/growth/items/0/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_growth1",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/growth/items/1/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/growth/items/1/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_growth2",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/growth/items/2/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/growth/items/2/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_valuation0",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/valuation/items/0/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/valuation/items/0/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_valuation1",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/valuation/items/1/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/valuation/items/1/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_valuation2",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/valuation/items/2/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/valuation/items/2/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_industry0",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/industry/items/0/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/industry/items/0/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_industry1",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/industry/items/1/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/industry/items/1/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_industry2",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/industry/items/2/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/industry/items/2/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_risk0",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/risk/items/0/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/risk/items/0/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_risk1",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/risk/items/1/score",
+        "value": 1,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/risk/items/1/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "score_risk2",
+        "kind": "inference",
+        "statement": "合成查核：research:/scores/risk/items/2/score",
+        "value": 2,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/scores/risk/items/2/score"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "metric_price"
+        ],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_0_eps",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/0/assumptions/eps",
+        "value": 5,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/0/assumptions/eps"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_0_multiple",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/0/assumptions/multiple",
+        "value": 26.0,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/0/assumptions/multiple"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "scenario_0",
+        "kind": "calculation",
+        "statement": "合成查核：research:/valuation/scenarios/0/model_price",
+        "value": 130,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/0/model_price"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "assumption_0_eps",
+          "assumption_0_multiple"
+        ],
+        "calculation": {
+          "method": "product",
+          "inputs": [
+            5,
+            26.0
+          ],
+          "reason": "假設EPS乘以假設本益比，模型結果不等於目標價保證"
+        },
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_1_eps",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/1/assumptions/eps",
+        "value": 5,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/1/assumptions/eps"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_1_multiple",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/1/assumptions/multiple",
+        "value": 18.0,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/1/assumptions/multiple"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "scenario_1",
+        "kind": "calculation",
+        "statement": "合成查核：research:/valuation/scenarios/1/model_price",
+        "value": 90,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/1/model_price"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "assumption_1_eps",
+          "assumption_1_multiple"
+        ],
+        "calculation": {
+          "method": "product",
+          "inputs": [
+            5,
+            18.0
+          ],
+          "reason": "假設EPS乘以假設本益比，模型結果不等於目標價保證"
+        },
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_2_eps",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/2/assumptions/eps",
+        "value": 5,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/2/assumptions/eps"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "assumption_2_multiple",
+        "kind": "assumption",
+        "statement": "合成查核：research:/valuation/scenarios/2/assumptions/multiple",
+        "value": 30.0,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/2/assumptions/multiple"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "reviewed",
+        "sources": [],
+        "selected_source": null,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "scenario_2",
+        "kind": "calculation",
+        "statement": "合成查核：research:/valuation/scenarios/2/model_price",
+        "value": 150,
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/valuation/scenarios/2/model_price"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [],
+        "selected_source": null,
+        "premises": [
+          "assumption_2_eps",
+          "assumption_2_multiple"
+        ],
+        "calculation": {
+          "method": "product",
+          "inputs": [
+            5,
+            30.0
+          ],
+          "reason": "假設EPS乘以假設本益比，模型結果不等於目標價保證"
+        },
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      },
+      {
+        "id": "event_0",
+        "kind": "fact",
+        "statement": "合成查核：research:/events/0/description",
+        "value": "範例：下次財報發布日（須查證，找不到就不填）",
+        "unit": "同目標欄位（合成）",
+        "period": "2026合成同口徑期間",
+        "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+        "targets": [
+          "research:/events/0/description"
+        ],
+        "report_excerpt": "",
+        "material": true,
+        "verdict": "supported",
+        "sources": [
+          {
+            "url": "https://example.invalid/sample-source",
+            "locator": "合成附件表格之對應列",
+            "published_at": "2026-07-30",
+            "period": "2026合成同口徑期間",
+            "basis": "合成數值，非外部事實；單位及證券口徑同參照欄位",
+            "value": "範例：下次財報發布日（須查證，找不到就不填）",
+            "rank": "primary",
+            "retrieval": "document"
+          }
+        ],
+        "selected_source": 0,
+        "premises": [],
+        "calculation": null,
+        "reason": "合成作者核對紀錄；不表示外部數據已查證"
+      }
+    ],
+    "counter_cases": [
+      {
+        "thesis_index": 0,
+        "claim_ids": [
+          "metric_price"
+        ],
+        "report_excerpt": "反方假設（合成）：成本上升使獲利假設落空。",
+        "scenario": "成本上升使獲利假設落空",
+        "impact": "原合成估值與行動需重新評估",
+        "disposition": "disclosed",
+        "follow_up": "取得下一期正式資料後核對；未觀察到前不當作已發生事實"
+      },
+      {
+        "thesis_index": 0,
+        "claim_ids": [
+          "metric_price"
+        ],
+        "report_excerpt": "反方假設（合成）：需求循環轉弱使成長假設落空。",
+        "scenario": "需求循環轉弱使成長假設落空",
+        "impact": "原合成估值與行動需重新評估",
+        "disposition": "disclosed",
+        "follow_up": "取得下一期正式資料後核對；未觀察到前不當作已發生事實"
+      },
+      {
+        "thesis_index": 0,
+        "claim_ids": [
+          "metric_price"
+        ],
+        "report_excerpt": "反方假設（合成）：市場倍數下修使模型價失去支撐。",
+        "scenario": "市場倍數下修使模型價失去支撐",
+        "impact": "原合成估值與行動需重新評估",
+        "disposition": "disclosed",
+        "follow_up": "取得下一期正式資料後核對；未觀察到前不當作已發生事實"
+      }
+    ],
+    "invalidation_conditions": [
+      {
+        "thesis_index": 0,
+        "claim_ids": [
+          "metric_eps_ttm"
+        ],
+        "report_excerpt": "失效條件（合成）：後續兩期財報的同口徑TTM稀釋EPS均低於5元時重評。",
+        "driver": "支持估值的獲利能力",
+        "observable": "後續兩期財報之可比TTM稀釋EPS",
+        "trigger": "兩期TTM稀釋EPS均低於5元；此為分析假設門檻",
+        "review_on": "後續兩期正式季報公布後各核對一次"
+      }
+    ]
+  },
+  "financial_history": {
+    "status": "attempted",
+    "reason": "合成三個完整年度；非真實公司資料或取數結果",
+    "currency": "TWD",
+    "basis": "consolidated",
+    "latest_period_end": "2025-12-31",
+    "periods": [
+      {
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "inputs": {
+          "revenue": {
+            "raw_value": 100,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 revenue",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "gross_profit": {
+            "raw_value": 40.0,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 gross_profit",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "operating_income": {
+            "raw_value": 20.0,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 operating_income",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "net_income_parent": {
+            "raw_value": 10,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 net_income_parent",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "diluted_eps": {
+            "raw_value": 1,
+            "scale": 1,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 diluted_eps",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "total_assets": {
+            "raw_value": 200,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 total_assets",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "total_liabilities": {
+            "raw_value": 140,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 total_liabilities",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "total_equity": {
+            "raw_value": 60,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 total_equity",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "parent_equity_begin": {
+            "raw_value": 40,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 parent_equity_begin",
+            "period_start": null,
+            "period_end": "2022-12-31"
+          },
+          "parent_equity_end": {
+            "raw_value": 50,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 parent_equity_end",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "cash_bs_end": {
+            "raw_value": 20,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 cash_bs_end",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "cash_cf_end": {
+            "raw_value": 20,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 cash_cf_end",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "cfo": {
+            "raw_value": 20,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 cfo",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          },
+          "cash_ppe_purchases": {
+            "raw_value": 8,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2023 cash_ppe_purchases",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31"
+          }
+        },
+        "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除"
+      },
+      {
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "inputs": {
+          "revenue": {
+            "raw_value": 120,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 revenue",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "gross_profit": {
+            "raw_value": 48.0,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 gross_profit",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "operating_income": {
+            "raw_value": 24.0,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 operating_income",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "net_income_parent": {
+            "raw_value": 12,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 net_income_parent",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "diluted_eps": {
+            "raw_value": 1.2,
+            "scale": 1,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 diluted_eps",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "total_assets": {
+            "raw_value": 240,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 total_assets",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "total_liabilities": {
+            "raw_value": 170,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 total_liabilities",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "total_equity": {
+            "raw_value": 70,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 total_equity",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "parent_equity_begin": {
+            "raw_value": 50,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 parent_equity_begin",
+            "period_start": null,
+            "period_end": "2023-12-31"
+          },
+          "parent_equity_end": {
+            "raw_value": 60,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 parent_equity_end",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "cash_bs_end": {
+            "raw_value": 24,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 cash_bs_end",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "cash_cf_end": {
+            "raw_value": 24,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 cash_cf_end",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "cfo": {
+            "raw_value": 24,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 cfo",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "cash_ppe_purchases": {
+            "raw_value": 10,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2024 cash_ppe_purchases",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          }
+        },
+        "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除"
+      },
+      {
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "inputs": {
+          "revenue": {
+            "raw_value": 144,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 revenue",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "gross_profit": {
+            "raw_value": 57.6,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 gross_profit",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "operating_income": {
+            "raw_value": 28.8,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 operating_income",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "net_income_parent": {
+            "raw_value": 18,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 net_income_parent",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "diluted_eps": {
+            "raw_value": 1.8,
+            "scale": 1,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 diluted_eps",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "total_assets": {
+            "raw_value": 300,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 total_assets",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "total_liabilities": {
+            "raw_value": 210,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 total_liabilities",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "total_equity": {
+            "raw_value": 90,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 total_equity",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "parent_equity_begin": {
+            "raw_value": 60,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 parent_equity_begin",
+            "period_start": null,
+            "period_end": "2024-12-31"
+          },
+          "parent_equity_end": {
+            "raw_value": 75,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 parent_equity_end",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "cash_bs_end": {
+            "raw_value": 30,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 cash_bs_end",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "cash_cf_end": {
+            "raw_value": 30,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 cash_cf_end",
+            "period_start": null,
+            "period_end": "2025-12-31"
+          },
+          "cfo": {
+            "raw_value": 30,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 cfo",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "cash_ppe_purchases": {
+            "raw_value": 12,
+            "scale": 1000000,
+            "source_url": "https://example.invalid/annual-statements",
+            "locator": "合成年度附表 2025 cash_ppe_purchases",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          }
+        },
+        "one_off_note": "合成資料：一次性損益尚未核對，不假稱已排除"
+      }
+    ]
+  }
+}

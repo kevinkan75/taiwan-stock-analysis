@@ -1,0 +1,21 @@
+# Runtime and editor state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated reports, local inputs, build output and distributable archives
+/outputs/
+/reports/
+/local-data/
+/dist/
+*.zip
+*.skill
