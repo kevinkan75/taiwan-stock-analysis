@@ -21,6 +21,7 @@ metadata:
   review-schema-version: "1.2"
   review-validator-version: "1.2.0"
   html-renderer-version: "1.0.0"
+  bar-validator-version: "1.0.0"
   language: "zh-TW"
 ---
 
@@ -68,7 +69,7 @@ metadata:
 ## 必讀資源
 
 1. 每次先讀 [資料來源與口徑](references/data-and-methods.md)；發出燈號或評分前讀 [評分與燈號](references/scoring.md)；組織輸出及歷次比較時讀 [輸出與比較](references/output-and-history.md)。
-2. 執行前讀 [跨平台能力與驗證](references/portability.md)，確認資源讀取、搜尋、文件解析、程式執行及保存能力；不以平台介面設定代替分析規則。
+2. 執行前讀 [跨平台能力與驗證](references/portability.md)，依其中「依模式載入規則」確認本次必讀全文，再確認資源讀取、搜尋、文件解析、程式執行及保存能力；不以平台介面設定或成功上傳代替規則載入。移植時按「平台接入方式」映射工具，按「驗收紀錄與已知狀態」區分本地驗證與跨模型實測。
 3. 計算估值或技術指標時讀 [計算工具](references/calculations.md)，使用`scripts/finance_math.py`或等效可驗算工具；腳本不抓行情，也不檢驗外部資料真實性。
 4. 判斷產業後讀 [產業關鍵指標](references/industry-indicators.md)。
 5. 決策模式於完成研究後讀 [投資前決策檢核](references/decision.md)；研究模式不讀。
@@ -83,7 +84,7 @@ metadata:
 4. **基本面與成長。** 整理核心數據（口徑見data-and-methods）、獲利品質、現金流、資產負債及營收／EPS趨勢；區分已實現成長與管理層指引，檢視低基期、一次性收益、匯率、股數變化及產業循環。依financial-history.md新增最近三個完整年度的同口徑趨勢與報表勾稽；缺年度、缺值或不適用者列明原因，不以TTM或預估補齊。
 5. **投資邏輯。** 依output-and-history「投資邏輯與估值」：值得關注的原因、2–3項動能、市場關注議題與論點失效條件；分開事實、公司說法、外部預估與分析推論。
 6. **估值。** 依data-and-methods「估值操作」：已知估值、現價在歷史區間的位置、可比依據、有證據的情境。假設不足時保留缺口，反推敏感度不得稱合理價或補足估值評分；情境不是目標價保證。
-7. **技術面。** 詳細版或要求展開時，依data-and-methods「技術資料」取得可驗算日線，分析趨勢、20／60／120日均線、RSI14、MACD(12,26,9)、成交量及支撐／壓力（日線驗證範圍與樣本內統計亦見該節）；快速版只附一句狀態，區分已計算未展開、未執行及資料不足（見output-and-history），不以新聞代替指標。MACD等交叉依scoring.md「交叉幅度」。
+7. **技術面。** 日線進入計算前依data-and-methods「行情輸入稽核」執行`scripts/bar_audit.py`；`finance_math.py`亦使用同一驗證核心。保留原檔及診斷，不將結構通過當作來源或交易日曆已核實。詳細版或要求展開時，依data-and-methods「技術資料」取得可驗算日線，分析趨勢、20／60／120日均線、RSI14、MACD(12,26,9)、成交量及支撐／壓力（日線驗證範圍與樣本內統計亦見該節）；快速版只附一句狀態，區分已計算未展開、未執行及資料不足（見output-and-history），不以新聞代替指標。MACD等交叉依scoring.md「交叉幅度」。
 8. **事件與風險。** 依data-and-methods「事件與風險核對」。
 9. **評分與結論。** 依scoring.md逐項記錄證據、分數及缺口，套用完整性與重大風險規則，符合條件時給「暫定」訊號。以`assets/snapshot.example.json`為底組織新快照（合成資料，須全部換成實際資料、三項證據與來源），欄位細節與驗證出錯時才查`assets/snapshot.schema.json`；可執行Python時用`scripts/snapshot_guard.py`推導並驗證，R1–R3須填guardrails並依applied_adjustments呈現調整後分數；資格填明確狀態，信心、暫定及R6敏感度依程式結果；以完整最終報告重新驗證並保存版本欄位，通過不代表來源真實或投資勝率已驗證；不能執行時按同規則人工核對並明列未完成程式驗證。技術面獨立，不加進中長期總分。結論列支持因素、限制因素，及何種新證據會改變判斷。
 10. **比較前次。** 依output-and-history「歷次比較」。

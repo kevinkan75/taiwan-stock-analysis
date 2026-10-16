@@ -35,13 +35,46 @@
 - `volume_sma20`使用含當日的最近20筆；`relative_volume20`=當日量／該均量。缺任一量或全為0則不計比值。
 - `technical.last_close`是所提供日線價格，不能自行當作即時現價。
 
-日期重複／倒序、非正價格、負量、非有限數值等會退出並顯示輸入錯誤；不會默默改資料。指標「最小筆數」是工具可計算的最低筆數，不是研究層門檻；研究層技術燈號與Beta的門檻為240筆（見data-and-methods.md「技術資料」）。腳本輸出的 `warmup_note` 仍寫「Prefer >=250」，以研究層240筆為準，第二階段同步。短樣本須明說不足，勿過度解讀。
+日期重複／倒序、非正價格、負量、非有限數值等會退出並顯示輸入錯誤；不會默默改資料。指標「最小筆數」是工具可計算的最低筆數，不是研究層門檻；研究層技術燈號與Beta的門檻為240筆（見data-and-methods.md「技術資料」）。`warmup_note`與研究層240筆門檻一致，但仍須完成來源及口徑核對。短樣本須明說不足，勿過度解讀。
 
 技術公式為常用定義；不同資料商的調整及初始化方法可產生差異。從其他來源引用指標時列其日期、參數及方法；無從確認則說明限制，不假稱由本工具重算。
 
 財務數值完成後，使用 `scripts/snapshot_guard.py` 對照正式Schema核對完整快照、評分及燈號；`finance_math.py`輸出不是完整報告快照，不可直接交給snapshot_guard。snapshot_guard的技術indicators欄位與finance_math輸出的欄位名稱一致，選取Schema要求的欄位，另附來源、調整方式及筆數。
 
 共用版本、權重、四捨五入、缺值面向分、加權總分及估值門檻由scripts/rules_core.py定義；snapshot_guard直接使用同一函式推導及驗算，不另寫一套門檻。金融與證據意義依scoring.md，歷史模型仍依保留分支。
+
+## 行情輸入檢查工具
+
+`finance_math.py`對提供的`bars`必定先呼叫同一`inspect_bars`核心；無行情的估值計算不受影響。OHLC三欄open／high／low可全部省略以支援僅收盤資料；一旦提供其中一欄則三欄均須有效且與close同口徑。省略volume或填null均為未知，不能當作零量。
+
+```json
+{
+  "bars": [
+    {"date": "2026-10-01", "open": 100, "high": 102, "low": 99, "close": 101, "volume": null},
+    {"date": "2026-10-02", "open": 101, "high": 103, "low": 100, "close": 102, "volume": 1000}
+  ],
+  "bar_context": {
+    "price_basis": "raw",
+    "exchange": "TWSE",
+    "source_url": "https://example.invalid/synthetic-prices",
+    "expected_sessions": ["2026-10-01", "2026-10-02"],
+    "calendar_source_url": "https://example.invalid/synthetic-calendar",
+    "jump_threshold_pct": 100
+  }
+}
+```
+
+以上完全為合成示例，不是真實報價或已核對交易日曆。`source_url`、`exchange`與價格基礎未知時保留待查；日曆為呼叫端提供，程式不連網驗證。若來源另提供`ohlc_basis`、`close_basis`或逐列`price_basis`，已知值必須一致。`jump_threshold_pct`為選填的相鄰收盤變化百分比診斷，跨缺日變化不當作單日報酬；不套用官方漲跌幅限制。
+
+```bash
+python3 <技能目錄>/scripts/bar_audit.py input.json > input.audit.json
+python3 <技能目錄>/scripts/bar_audit.py input.json --normalize > normalized.audit.json
+python3 <技能目錄>/scripts/finance_math.py input.json
+```
+
+預設只稽核，不正規化。`--normalize`明確要求輸出另含`normalized_bars`及`changes`的稽核檔；原始輸入不改寫，同日衝突則valid=false、退出碼2且不提供可用正規化序列。採用正規化資料計算時，另建立輸入JSON並保留原始檔與audit紀錄，不把整份audit當作finance_math輸入。
+
+輸出`valid`／`errors`／`issues`／`changes`／`summary`明確區分結構錯誤、待核對線索及主動正規化；`finance_math`的`bar_validation`保留同樣診斷，`technical.count`仍為原始有效輸入筆數。結構通過、日線240筆、原文與日曆交叉核對是不同條件；本工具未執行外部來源核實或報酬回測。
 
 ## 計算與欄位連動（規則1.6.0起）
 

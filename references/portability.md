@@ -1,12 +1,39 @@
 # 跨平台能力與驗證
 
+## 目錄
+
+- 依模式載入規則
+- 能力檢查與降級
+- 匯出與載入
+- 平台接入方式
+- 快照與機械驗證
+- 報告文字與版本追溯
+- 固定案例與跨模型驗收
+- 驗收紀錄與已知狀態
+- 版本交付補充
+
+## 依模式載入規則
+
+先讀SKILL.md，再按下表載入全文；檔名均相對於references/。不要用固定的文件份數判定完整性，不把目錄或搜尋摘要當作已讀全文。依階段載入即可，不要求每次載入全部14份參考文件。
+
+| 模式／階段 | 必讀文件 | 條件式追加 |
+| --- | --- | --- |
+| 個股完整研究（快速／詳細） | portability.md、data-and-methods.md、scoring.md、output-and-history.md、research-process.md、evidence-audit.md、financial-history.md、industry-indicators.md | 計算估值或技術指標時讀calculations.md；研究評分完成前不讀market.md；沒有決策需求不讀decision.md。 |
+| ETF完整研究 | portability.md、data-and-methods.md、scoring.md、output-and-history.md、research-process.md、evidence-audit.md、financial-history.md、etf.md、etf-data.md | ETF專屬規則取代個股不適用規則；calculations.md與industry-indicators.md按實際計算及產業分析需要追加。不評分工具依etf.md分流。 |
+| 市場快照 | portability.md、data-and-methods.md、output-and-history.md、market.md | 涉及額外計算時讀calculations.md；不啟動個股研究評分或決策流程。 |
+| 聚焦單一面向 | portability.md、data-and-methods.md、output-and-history.md；對指定面向發出評分或燈號前讀scoring.md | 估值／技術計算讀calculations.md；產業分析讀industry-indicators.md；ETF另讀etf.md與etf-data.md。不得因載入評分規則而補做未要求的其他面向或整體評分。 |
+| 決策層 | 先依完整個股或ETF研究列完成研究，評分完成後讀decision.md與market.md | 保留原研究分數；市場資訊僅用於決策指定關卡，不反向改寫研究評分。 |
+| 僅匯出既有互動HTML | portability.md、html-report.md，取得同次已驗證研究與review原檔 | 檔案不足須回到原研究模式補做，不從正文重建數字、不套合成範例。 |
+
+移植時逐份確認上述適用文件及其所需scripts/、assets/可讀取。若宿主只能提供文字，將必讀全文作為有檔名的獨立區塊交付；上下文不足時分階段載入，明列尚未載入項目。缺必讀規則時只整理資料，不發出依賴該規則的評分、燈號或決策；HTML原檔與程式不足時不宣稱已匯出。
+
 ## 能力檢查與降級
 
 先記錄 `capabilities`：resources、web、documents、python、storage，各為available／unavailable／unknown；必須根據實際可用工具或操作結果，不把模型名稱當能力證據。
 
 | 能力不足 | 必要處理 |
 | --- | --- |
-| 無法讀取參考文件 | 由宿主提供SKILL.md與七份個股references全文（決策模式才需要decision.md）；ETF模式另需etf.md與etf-data.md；市場模式及決策模式第4關另需market.md。規則尚未載入完整時只給資料整理，不發研究分或燈號。 |
+| 無法讀取參考文件 | 由宿主依上方「依模式載入規則」提供SKILL.md與適用文件全文；規則尚未載入完整時只給資料整理，不發出依賴該規則的研究分、燈號或決策。 |
 | 無網路／搜尋 | 使用已提供文件，按可核對截止日提供歷史分析；不以模型記憶補最新報價或申報，不宣稱目前訊號。 |
 | 無PDF／文件解析 | 改用可讀官方HTML或使用者提供的原文；讀不到的數值保持缺值。搜尋摘要不能替代原文。 |
 | 無Python | 可用等效可驗算計算工具；否則按公式人工核對並標未完成程式驗證。技術指標未計算時保持not_run，不填趨勢。 |
@@ -21,6 +48,22 @@
 - 本技能的Python程式只用標準函式庫，執行環境採Python 3.8以上；跨平台應實跑自身版本。JSON／Markdown可讀不等於自動載入、工具權限或結果一致。
 - Claude Code、Gemini CLI等平台的安裝位置及權限，以當時官方文件為準；本技能不授權跳過目標平台的權限程序。不宣稱一般聊天介面或任意API原生支援技能安裝。
 
+## 平台接入方式
+
+先確認宿主的實際能力，再選接入方式；本節是能力介面要求，不是特定產品的安裝保證。
+
+| 接入方式 | 宿主需完成的工作 | 驗收界線 |
+| --- | --- | --- |
+| 支援技能目錄的代理工具 | 保留相對目錄，設定自身觸發方式；允許代理讀取適用規則，並按授權呼叫搜尋、文件解析與本地Python。 | 能顯示技能名稱不代表已讀取規則；須實際完成固定案例及驗證。OpenAI介面設定可忽略。 |
+| 僅可上傳文件的聊天介面 | 明確要求依SKILL.md及適用全文執行；確認附件內容確實可讀。只有文字能力時依降級規則交付。 | 上傳ZIP不代表平台會解壓、讀取巢狀文件或執行程式；不支援時由使用者或宿主提供全文。 |
+| API／自建代理 | 由宿主提供模式路由、規則載入、搜尋／原文取得、計算及驗證呼叫、檔案保存與錯誤回傳；記錄工具結果。 | 單一模型API呼叫不等於完整執行環境；程式庫或模型名稱本身不證明任何工具能力。 |
+
+工具可替換實作，但須回傳可核對的資料：原文取得保留穩定網址、文件日期及定位；計算保留原始輸入與口徑；驗證保留命令、退出狀態及valid/errors；保存保留可重新取得的檔案識別。工具失敗時按能力表降級，不臆造成功結果。
+
+保留原JSON欄位名稱、版本、固定摘要欄名、規則版本行及結果行；僅更換宿主工具，不翻譯或改寫驗證器所需的格式。一般JSON Schema驗證只涵蓋結構，不能取代snapshot_guard、etf_guard、decision_guard及review_guard的適用檢查。等效實作須用相同案例比對，未驗證前不得宣稱等同原驗證器。
+
+外部執行驗證時，在驗收紀錄分列模型本身能力與外部宿主能力；模型無Python而宿主可執行時，capabilities.python仍按被評估對象實際能力記錄，不回填為模型原生能力。不得將任一模式的能力紀錄加入既有研究JSON頂層而破壞Schema。
+
 ## 快照與機械驗證
 
 個股新快照採schema 1.5／model 1.3。發布版本的單一程式來源為rules_core.py，SKILL.md metadata為介面鏡像，由測試核對；不在每份模板複製發布組合。現行與歷史支援分支分別見RELEASE_PROFILE／ARCHIVED_PROFILES，算術及摘要適用範圍見ARITHMETIC_PROFILES／SUMMARY_PROFILES。未知版本拒絕；舊格式1.0／1.1保留原檔、回報未驗證，不回填欄位或重算歷史。
@@ -33,7 +76,7 @@ ETF新紀錄採獨立schema 1.1／model etf-1.2，交etf_guard，不交snapshot_
 
 驗證器支援model 1.0、1.1、1.2及1.3；重大產業調整或自訂門檻須另定模型版本、Schema及驗證規則，不能以1.0標記取得程式通過。驗證器本身可在外部執行，不能把外部驗證能力回填為目標模型的Python能力。
 
-範例見 `assets/snapshot.example.json`（合成資料，`tests/check_snapshot_example.py` 保證可通過驗證器）；正式格式見 `assets/snapshot.schema.json`（JSON Schema Draft 2020-12）。`scripts/snapshot_guard.py`僅執行此內附Schema所使用的關鍵字，遇未支援關鍵字即報錯，不是通用JSON Schema引擎。其他平台可另用符合Draft 2020-12的驗證器，並啟用format檢查。
+範例見 `assets/snapshot.example.json`（合成資料，`tests/check_snapshot_example.py` 保證可通過驗證器）；正式格式見 `assets/snapshot.schema.json`（JSON Schema Draft 2020-12）。`scripts/snapshot_guard.py`僅執行此內附Schema所使用的關鍵字，遇未支援關鍵字即報錯，不是通用JSON Schema引擎。其他平台可另用符合Draft 2020-12的驗證器並啟用format檢查，作為結構檢查；仍須執行原技能的適用驗證器或已驗收的等效實作，才能宣稱業務規則通過。
 
 執行：
 
@@ -69,6 +112,53 @@ python3 <技能目錄>/scripts/snapshot_guard.py derived.json
 讓各目標平台在相同資料、來源、截止時間與假設下各產生schema 1.5快照，再交snapshot_guard驗證；不得只比文字或只看成功載入。至少涵蓋2330／TSM辨識、尖點低基期、台達電估值缺口、過期報價、技術資料不足、重大事件、無外部EPS但有獨立模型。不得洩露案例預期結果給執行模型。
 
 保留平台、模型版本、執行日期、工具能力、輸入／輸出及測試結果。只完成本地腳本或同平台獨立驗收，不能寫成Claude／Gemini已通過。沒有實際執行介面時標跨模型未執行，不阻擋可完成的Skill更新。
+
+## 驗收紀錄與已知狀態
+
+分別判斷「規則可讀取」「工具流程可執行」「相同輸入的規則結果一致」與「不同模型的證據判讀一致」。同一份模型產生的JSON交同一驗證器兩次，不是跨模型驗收；程式通過也不證明來源真實。
+
+每次驗收另存下列紀錄，不加入研究快照Schema；可存一般Markdown或JSON。使用相同的輸入原檔、來源、截止時間及假設，評分前不提供預期答案；比較機械結果與定性證據的差異，不要求報告逐字相同。失敗或部分完成須保留實際輸出及未完成範圍。
+
+```json
+{
+  "executed_at": null,
+  "platform": null,
+  "model_version": null,
+  "runtime": {"os": null, "python": null, "node": null},
+  "skill_version": null,
+  "rule_version": null,
+  "capabilities": {
+    "resources": "unknown", "web": "unknown", "documents": "unknown",
+    "python": "unknown", "storage": "unknown"
+  },
+  "external_host_tools": [],
+  "loaded_files": [],
+  "case_id": null,
+  "input_sha256": null,
+  "data_cutoff_at": null,
+  "assumptions_reference": null,
+  "output_reference": null,
+  "validator_results": [],
+  "comparison_reference": null,
+  "differences": [],
+  "status": "not_run",
+  "limitations": []
+}
+```
+
+capabilities使用available／unavailable／unknown；status使用passed／failed／partial／not_run。填入實際模型版本與完整帶時區時間；未執行欄位保持null或空陣列，不填虛構版本。validator_results逐項保留命令、退出碼、valid及錯誤；僅語法檢查時寫明未在該Python版本實際執行。紀錄避免帳號憑證與個人本機路徑。
+
+截至2026-10-16，本次維護已取得的驗收證據如下；僅代表當次環境，不代表其他平台或未來版本。
+
+| 項目 | 實際環境／方法 | 狀態與範圍 |
+| --- | --- | --- |
+| 完整本地回歸 | Linux、Python 3.12.14、Node.js 24.19.0；scripts/run_checks.py | 通過18組Python共1,794項、25項Node檢查及65,536種決策燈號組合；為合成資料與本地邏輯檢查。 |
+| 獨立目錄、排除OpenAI設定 | 複製至臨時目錄，排除agents/與Git資料；執行check_portability.py、個股與review範例驗證、HTML匯出及verify | 214項可攜性檢查與四個CLI流程通過；未呼叫其他模型、未取得即時行情。 |
+| Python 3.8語法 | 以Python 3.12的ast.parse(feature_version=(3,8))解析14份scripts/*.py | 語法檢查通過；不是Python 3.8執行驗收。 |
+| 行情輸入稽核1.0.0 | check_bar_audit.py；合成行情、公開CLI及finance_math共用核心 | 157項通過；涵蓋排序／重複、OHLC、缺量與零量、口徑衝突、日曆差異與百分比邊界；未驗證外部來源或歷史回測。 |
+| 其他Python版本及Windows實機 | 本次未實際執行 | 未執行；CI配置及換行模擬不等於這些環境通過。 |
+| Claude／Gemini等目標平台的固定案例 | 本次沒有可用的目標平台模型執行介面 | 跨模型未執行；不宣稱安裝、完整工具流程或結果一致性已驗收。 |
+| HTML實際瀏覽器 | 尚未完成離線、鍵盤、手機及列印驗收 | 未完成；Node互動邏輯與匯出一致性通過不能代替瀏覽器驗收。 |
 
 ## 1.11.0交付補充
 
